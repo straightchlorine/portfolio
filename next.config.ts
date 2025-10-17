@@ -7,11 +7,6 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-
-  // Enable React Compiler (experimental)
-  experimental: {
-    reactCompiler: true,
-  },
 };
 
 export default nextConfig;
