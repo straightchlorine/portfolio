@@ -1,0 +1,26 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: portfolio-https
+  namespace: portfolio
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`portfolio.codextechnologies.org`)
+      kind: Rule
+      services:
+        - name: portfolio-nextjs
+          port: 80
+      middlewares:
+        - name: compress
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: compress
+  namespace: portfolio
+spec:
+  compress: {}

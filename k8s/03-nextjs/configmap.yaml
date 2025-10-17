@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nextjs-config
+  namespace: portfolio
+data:
+  app-url: "https://portfolio.codextechnologies.org"
