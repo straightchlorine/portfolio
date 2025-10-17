@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: nextjs
-        image: your-dockerhub-username/portfolio:latest
+        image: straightchlorine/portfolio:latest
         ports:
         - containerPort: 3000
           name: http
