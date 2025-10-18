@@ -46,6 +46,7 @@ jobs:
   build-and-push:
     needs: test
     runs-on: portfolio-runners
+    environment: prod
 
     outputs:
       docker-hub-image: ${{ steps.images.outputs.dockerhub }}
