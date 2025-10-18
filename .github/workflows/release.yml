@@ -187,6 +187,13 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+          kubectl version --client
+
       - name: Update deployment with new image
         run: |
           # Use GHCR as primary (better rate limits)
