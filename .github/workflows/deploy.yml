@@ -149,7 +149,7 @@ jobs:
       - name: Update deployment image
         run: |
           # Use GHCR as primary (better rate limits)
-          IMAGE="${{ needs.build-and-push.outputs.ghcr-image }}"
+          IMAGE="ghcr.io/${{ github.repository }}:main-$(git rev-parse --short HEAD)"
 
           echo "🚀 Deploying development build: $IMAGE"
 
