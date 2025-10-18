@@ -17,12 +17,10 @@ spec:
     spec:
       serviceAccountName: github-runner
 
-      # Security context (run as non-root)
+      # Security context - runner needs root for Docker operations
+      # This is acceptable since it's isolated in its own pod
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
         fsGroup: 1000
-        runAsNonRoot: true
 
       containers:
       - name: runner
@@ -30,11 +28,9 @@ spec:
         image: myoung34/github-runner:latest
 
         # Security context for container
+        # Note: This runner needs elevated privileges for Docker-in-Docker
         securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
+          allowPrivilegeEscalation: true
           readOnlyRootFilesystem: false
 
         env:
