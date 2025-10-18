@@ -23,7 +23,8 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 **Frontend:** Next.js 15 (App Router) + TypeScript + Tailwind
 **Database:** PostgreSQL 16 (K8s StatefulSet)
 **Cache:** Redis 7
-**Infrastructure:** Kubernetes (Hetzner), Traefik ingress, GitHub Actions
+**Infrastructure:** k3s (Hetzner), Traefik ingress, ARC (Actions Runner Controller)
+**CI/CD:** GitHub Actions with self-hosted runners
 **Analytics:** Self-hosted Umami
 
 ---
@@ -34,6 +35,8 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 Internet → Cloudflare DNS → Traefik (TLS) → Next.js Pods (3x)
                                               ↓
                                           PostgreSQL + Redis
+
+GitHub → ARC Controller → Ephemeral Runner Pods → kubectl deploy
 ```
 
 ---
@@ -73,24 +76,32 @@ pnpm dev
 
 ## CI/CD Pipeline
 
-### On Pull Request
-- Lint, type check, format check
-- Build test
-- Lighthouse performance check
+**Self-Hosted Runners:** GitHub Actions Runner Controller (ARC) in Kubernetes
 
-### On Push to Main
-1. Run tests
-2. Build Docker image
-3. Push to Docker Hub
-4. Update K8s deployment
-5. Wait for rollout (with health checks)
-6. Rollback on failure
+### On Pull Request (ci.yml)
+- ESLint, TypeScript check
+- Build test
+
+### On Push to master (deploy.yml)
+1. Run tests and build
+2. Build Docker image with BuildKit
+3. Push to Docker Hub + GitHub Container Registry
+4. Deploy to Kubernetes via kubectl
+5. Wait for rollout with health checks
+
+### On Version Tag (release.yml)
+1. Validate semver tag
+2. Run full test suite
+3. Build and push multi-registry images
+4. Deploy to production
+5. Run smoke tests
+6. Create GitHub release with changelog
 
 **Required GitHub Secrets:**
-- `DOCKERHUB_USERNAME`
-- `DOCKERHUB_TOKEN`
-- `KUBECONFIG` (base64-encoded)
+- `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN`
 - `NEXT_PUBLIC_APP_URL`
+
+**No longer needed:** KUBECONFIG (ARC uses in-cluster ServiceAccount)
 
 ---
 
