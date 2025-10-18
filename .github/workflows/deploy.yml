@@ -1,4 +1,4 @@
-name: Continuous Deployment (main branch)
+name: Continuous Deployment (master branch)
 
 on:
   push:
@@ -6,6 +6,10 @@ on:
     # Don't run on version tags (handled by release.yml)
     tags-ignore:
       - 'v*.*.*'
+
+permissions:
+  contents: read
+  packages: write
 
 env:
   K8S_NAMESPACE: portfolio
