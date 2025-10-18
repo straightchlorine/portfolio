@@ -101,8 +101,6 @@ pnpm dev
 - `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN`
 - `NEXT_PUBLIC_APP_URL`
 
-**No longer needed:** KUBECONFIG (ARC uses in-cluster ServiceAccount)
-
 ---
 
 ## Kubernetes Setup
