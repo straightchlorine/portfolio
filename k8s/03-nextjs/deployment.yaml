@@ -20,9 +20,20 @@ spec:
       labels:
         app: portfolio-nextjs
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
       containers:
       - name: nextjs
         image: straightchlorine/portfolio:latest
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
         ports:
         - containerPort: 3000
           name: http
@@ -34,8 +45,13 @@ spec:
             secretKeyRef:
               name: nextjs-secret
               key: database-url
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
         - name: REDIS_URL
-          value: redis://redis:6379
+          value: redis://:$(REDIS_PASSWORD)@redis:6379
         - name: NEXT_PUBLIC_APP_URL
           valueFrom:
             configMapKeyRef:

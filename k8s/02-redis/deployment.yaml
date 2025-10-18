@@ -13,14 +13,37 @@ spec:
       labels:
         app: redis
     spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
       containers:
       - name: redis
         image: redis:7-alpine
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
         ports:
         - containerPort: 6379
           name: redis
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: password
         command: ["redis-server"]
-        args: ["--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+        args:
+        - "--maxmemory"
+        - "256mb"
+        - "--maxmemory-policy"
+        - "allkeys-lru"
+        - "--requirepass"
+        - "$(REDIS_PASSWORD)"
         resources:
           requests:
             memory: "128Mi"
@@ -31,14 +54,16 @@ spec:
         livenessProbe:
           exec:
             command:
-            - redis-cli
-            - ping
+            - sh
+            - -c
+            - redis-cli -a $REDIS_PASSWORD ping
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           exec:
             command:
-            - redis-cli
-            - ping
+            - sh
+            - -c
+            - redis-cli -a $REDIS_PASSWORD ping
           initialDelaySeconds: 5
           periodSeconds: 5
