@@ -151,23 +151,3 @@ docker push your-username/portfolio:latest
 kubectl set image deployment/portfolio-nextjs \
   nextjs=your-username/portfolio:latest -n portfolio
 ```
-
-### Automated
-Push to `main` branch - GitHub Actions handles everything.
-
----
-
-## Performance Targets
-
-- **Lighthouse:** 100/100/100/100
-- **TTFB:** <1s
-- **API response:** <100ms (p95)
-- **Uptime:** 99.9%
-
----
-
-## Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Next.js App Router](https://nextjs.org/docs/app)
-- [Kubernetes Docs](https://kubernetes.io/docs/)
