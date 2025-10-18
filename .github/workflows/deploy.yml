@@ -136,6 +136,10 @@ jobs:
       name: development
       url: https://portfolio.codextechnologies.org
 
+    permissions:
+      contents: read
+      packages: read
+
     steps:
       - uses: actions/checkout@v5
 
