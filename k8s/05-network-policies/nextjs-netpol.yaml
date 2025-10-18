@@ -1,0 +1,58 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nextjs-network-policy
+  namespace: portfolio
+spec:
+  podSelector:
+    matchLabels:
+      app: portfolio-nextjs
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow incoming HTTP traffic from anywhere (it's a web server!)
+  # In production, this would come from Traefik/Ingress
+  - from:
+    - namespaceSelector: {}  # Allow from any namespace
+    - podSelector: {}        # Allow from any pod in same namespace
+    ports:
+    - protocol: TCP
+      port: 3000
+  egress:
+  # Allow DNS resolution
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow connection to PostgreSQL
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgres
+    ports:
+    - protocol: TCP
+      port: 5432
+  # Allow connection to Redis
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  # Allow HTTPS egress for external API calls (if needed)
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+  # Allow HTTP egress for external API calls (if needed)
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 80

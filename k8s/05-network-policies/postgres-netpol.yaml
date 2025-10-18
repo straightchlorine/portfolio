@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-network-policy
+  namespace: portfolio
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow incoming connections ONLY from Next.js pods on port 5432
+  - from:
+    - podSelector:
+        matchLabels:
+          app: portfolio-nextjs
+    ports:
+    - protocol: TCP
+      port: 5432
+  egress:
+  # Allow DNS resolution (required for Kubernetes)
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # PostgreSQL doesn't need to connect to anything else
+  # No other egress rules = can't make outbound connections
