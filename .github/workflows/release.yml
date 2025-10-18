@@ -16,7 +16,7 @@ jobs:
   # Job 1: Extract version and validate
   # ============================================
   validate:
-    runs-on: ubuntu-latest
+    runs-on: portfolio-runners
     outputs:
       version: ${{ steps.version.outputs.version }}
       version_without_v: ${{ steps.version.outputs.version_without_v }}
@@ -55,7 +55,7 @@ jobs:
   # ============================================
   test:
     needs: validate
-    runs-on: ubuntu-latest
+    runs-on: portfolio-runners
 
     steps:
       - uses: actions/checkout@v4
@@ -90,7 +90,7 @@ jobs:
   # ============================================
   build-and-push:
     needs: [validate, test]
-    runs-on: ubuntu-latest
+    runs-on: portfolio-runners
 
     outputs:
       docker-hub-image: ${{ steps.images.outputs.dockerhub }}
@@ -179,28 +179,13 @@ jobs:
   # ============================================
   deploy:
     needs: [validate, build-and-push]
-    runs-on: ubuntu-latest
+    runs-on: portfolio-runners
     environment:
       name: production
       url: https://portfolio.codextechnologies.org
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup kubectl
-        uses: azure/setup-kubectl@v4
-        with:
-          version: 'v1.28.0'
-
-      - name: Configure kubectl
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
-          chmod 600 ~/.kube/config
-
-          # Verify connection
-          kubectl cluster-info
-          kubectl get nodes
 
       - name: Update deployment with new image
         run: |
@@ -292,7 +277,7 @@ jobs:
   # ============================================
   create-release:
     needs: [validate, deploy]
-    runs-on: ubuntu-latest
+    runs-on: portfolio-runners
     permissions:
       contents: write
 
