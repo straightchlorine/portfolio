@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-runner
+  namespace: portfolio
+  labels:
+    app: github-runner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-runner
+  template:
+    metadata:
+      labels:
+        app: github-runner
+    spec:
+      serviceAccountName: github-runner
+
+      # Security context (run as non-root)
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+
+      containers:
+      - name: runner
+        # Official GitHub Actions runner image
+        image: myoung34/github-runner:latest
+
+        # Security context for container
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+
+        env:
+        # GitHub configuration from secret
+        - name: ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: github-runner-secret
+              key: GITHUB_TOKEN
+
+        - name: REPO_URL
+          valueFrom:
+            secretKeyRef:
+              name: github-runner-secret
+              key: GITHUB_REPOSITORY
+
+        - name: RUNNER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: github-runner-secret
+              key: RUNNER_NAME
+              optional: true
+
+        - name: LABELS
+          valueFrom:
+            secretKeyRef:
+              name: github-runner-secret
+              key: RUNNER_LABELS
+              optional: true
+
+        # Runner configuration
+        - name: RUNNER_WORKDIR
+          value: "/runner/_work"
+
+        # Allow runner to use kubectl
+        - name: DISABLE_RUNNER_UPDATE
+          value: "true"
+
+        # Docker-in-Docker (for building images)
+        - name: DOCKER_HOST
+          value: "tcp://localhost:2375"
+
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+
+        volumeMounts:
+        - name: work
+          mountPath: /runner/_work
+        - name: docker-certs
+          mountPath: /certs
+
+      # Docker-in-Docker sidecar (for building images)
+      - name: dind
+        image: docker:24-dind
+
+        securityContext:
+          privileged: true  # Required for Docker-in-Docker
+
+        env:
+        - name: DOCKER_TLS_CERTDIR
+          value: "/certs"
+
+        volumeMounts:
+        - name: docker-storage
+          mountPath: /var/lib/docker
+        - name: docker-certs
+          mountPath: /certs
+
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+
+      volumes:
+      - name: work
+        emptyDir: {}
+      - name: docker-storage
+        emptyDir: {}
+      - name: docker-certs
+        emptyDir: {}
+
+      # Restart policy
+      restartPolicy: Always
