@@ -33,8 +33,8 @@ if [ -f "$SA_TOKEN_PATH" ]; then
     kubectl config use-context default
 fi
 
-# Check if we can connect to cluster (using a faster command)
-if ! kubectl get namespaces &> /dev/null; then
+# Check if we can connect to cluster (using namespace-scoped command)
+if ! kubectl get pods -n "$NAMESPACE" &> /dev/null; then
     echo '{"error": "Cannot connect to cluster", "status": "unavailable"}' > "$OUTPUT_FILE"
     rm -f "$KUBECONFIG" 2>/dev/null
     exit 1
