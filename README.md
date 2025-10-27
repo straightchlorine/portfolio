@@ -1,43 +1,74 @@
-# Portfolio + Blog - Self-Hosted on Hetzner K8s
+# Portfolio
 
-Next.js 15 portfolio with blog, deployed to Hetzner Kubernetes with automated CI/CD.
+Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-ready infrastructure.
 
----
-
-## Getting Started
-
-```bash
-# Install dependencies
-pnpm install
-
-# Run dev server
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to see the app.
+**Author:** [Piotr Krzysztof Lis](https://github.com/straightchlorine)
 
 ---
 
-## Stack
+## Features
 
-**Frontend:** Next.js 15 (App Router) + TypeScript + Tailwind
-**Database:** PostgreSQL 16 (K8s StatefulSet)
-**Cache:** Redis 7
-**Infrastructure:** k3s (Hetzner), Traefik ingress, ARC (Actions Runner Controller)
-**CI/CD:** GitHub Actions with self-hosted runners
-**Analytics:** Self-hosted Umami
+### Current (MVP)
+
+- Live Kubernetes cluster metrics on homepage
+- Next.js 15 with App Router, React 19, TypeScript
+- Automated CI/CD with GitHub Actions and self-hosted runners
+- Production deployment on K3s (Hetzner)
+- Auto-generated Open Graph images and favicon
+- Multi-registry Docker builds (GHCR + Docker Hub)
+
+### Planned
+
+- Technical blog (MDX-powered)
+- Interactive CV system (integration with `/home/zweiss/code/curriculum-vitae`)
+- Contact form
+- Project case studies
+- Multi-language support (EN/PL)
 
 ---
 
 ## Architecture
 
 ```
-Internet → Cloudflare DNS → Traefik (TLS) → Next.js Pods (3x)
-                                              ↓
-                                          PostgreSQL + Redis
+Internet → Cloudflare → Traefik (TLS) → Next.js (3 pods)
+                                           ↓
+                                    PostgreSQL + Redis
 
-GitHub → ARC Controller → Ephemeral Runner Pods → kubectl deploy
+GitHub Push → Actions → ARC Runners → kubectl deploy
 ```
+
+**Stack:**
+- K3s on Hetzner Cloud
+- Traefik ingress with cert-manager
+- GitHub Actions with self-hosted runners
+- GHCR + Docker Hub registries
+
+---
+
+## Quick Start
+
+### Local Development
+
+```bash
+pnpm install
+pnpm dev
+# Open http://localhost:3000
+```
+
+Note: K8s metrics will fall back to mock data locally.
+
+### Production Deployment
+
+```bash
+# Development
+git push origin main
+
+# Production
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+See [docs/INFRASTRUCTURE.md](./docs/INFRASTRUCTURE.md) for details.
 
 ---
 
@@ -45,107 +76,169 @@ GitHub → ARC Controller → Ephemeral Runner Pods → kubectl deploy
 
 ```
 portfolio/
-├── .github/workflows/        # CI/CD pipelines
-├── app/                      # Next.js App Router pages
-├── components/               # React components
-├── content/                  # MDX blog posts & projects
-├── lib/                      # Utilities (Prisma, Redis, MDX)
-├── k8s/                      # Kubernetes manifests
-├── prisma/                   # Database schema
-├── public/                   # Static assets
-├── Dockerfile                # Multi-stage build
-└── docker-compose.yml        # Local dev environment
+├── app/
+│   ├── api/              # Metrics & health endpoints
+│   ├── tech-stack/       # WIP
+│   ├── icon.tsx          # Favicon generation
+│   ├── opengraph-image.tsx
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── ErrorBoundary.tsx
+│   └── LiveMetrics.tsx
+├── k8s/                  # Kubernetes manifests
+│   ├── 00-namespace/
+│   ├── 01-postgres/
+│   ├── 02-redis/
+│   ├── 03-nextjs/
+│   ├── 04-ingress/
+│   └── 05-network-policies/
+├── scripts/
+│   └── fetch-k8s-metrics.sh
+├── docs/
+│   ├── SETUP.md
+│   ├── INFRASTRUCTURE.md
+│   ├── STRATEGY.md
+│   └── k8s-metrics.md
+└── .github/workflows/
+    ├── ci.yml
+    ├── deploy.yml
+    └── release.yml
 ```
 
 ---
 
-## Local Development
+## Tech Stack
+
+**Frontend:**
+- Next.js 15 (App Router, Server Components)
+- React 19
+- TypeScript
+- Tailwind CSS 4
+
+**Infrastructure:**
+- Kubernetes (K3s)
+- PostgreSQL 16
+- Redis 7
+- Traefik + cert-manager
+
+**DevOps:**
+- GitHub Actions
+- Actions Runner Controller
+- Docker (multi-platform)
+- GHCR + Docker Hub
+
+---
+
+## Scripts
 
 ```bash
-# Start services (PostgreSQL + Redis)
-docker-compose up -d
-
-# Run database migrations
-pnpm prisma migrate dev
-
-# Start dev server
-pnpm dev
+pnpm dev          # Development server (Turbopack)
+pnpm build        # Production build
+pnpm start        # Production server
+pnpm lint         # ESLint
 ```
 
 ---
 
-## CI/CD Pipeline
+## CI/CD Workflows
 
-**Self-Hosted Runners:** GitHub Actions Runner Controller (ARC) in Kubernetes
-
-### On Pull Request (ci.yml)
-- ESLint, TypeScript check
-- Build test
-
-### On Push to master (deploy.yml)
-1. Run tests and build
-2. Build Docker image with BuildKit
-3. Push to Docker Hub + GitHub Container Registry
-4. Deploy to Kubernetes via kubectl
-5. Wait for rollout with health checks
-
-### On Version Tag (release.yml)
-1. Validate semver tag
-2. Run full test suite
-3. Build and push multi-registry images
-4. Deploy to production
-5. Run smoke tests
-6. Create GitHub release with changelog
-
-**Required GitHub Secrets:**
-- `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN`
-- `NEXT_PUBLIC_APP_URL`
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| ci.yml | Pull requests | Linting & type checks |
+| deploy.yml | Push to `main` | Deploy to development |
+| release.yml | Version tags (`v*.*.*`) | Deploy to production |
 
 ---
 
-## Kubernetes Setup
+## Key Features
 
-### 1. Create Namespace
-```bash
-kubectl apply -f k8s/00-namespace.yaml
-```
+### Live Kubernetes Metrics
 
-### 2. Create Secrets
-```bash
-# PostgreSQL credentials
-kubectl create secret generic postgres-secret \
-  --from-literal=username=postgres \
-  --from-literal=password=YOUR_PASSWORD \
-  -n portfolio
+- Executes `scripts/fetch-k8s-metrics.sh` to query K8s API
+- Displays pod status, restarts, and health
+- Updates every 10 seconds
+- Falls back to mock data if cluster unavailable
 
-# Database URL for Next.js
-kubectl create secret generic nextjs-secret \
-  --from-literal=database-url='postgresql://postgres:PASSWORD@postgres:5432/portfolio' \
-  -n portfolio
-```
+### Auto-Generated Images
 
-### 3. Deploy Infrastructure
-```bash
-kubectl apply -f k8s/01-postgres/
-kubectl apply -f k8s/02-redis/
-kubectl apply -f k8s/03-nextjs/
-kubectl apply -f k8s/04-ingress/
-```
+- Favicon: Purple `/` on dark background
+- OG Image: Terminal-styled card with name and title
+- Generated via Next.js `ImageResponse` API
 
-### 4. Verify
-```bash
-kubectl get pods -n portfolio
-kubectl logs -f deployment/portfolio-nextjs -n portfolio
-```
+---
+
+## Roadmap
+
+**Phase 1: MVP** (Current)
+- [x] Basic portfolio
+- [x] Live K8s metrics
+- [x] Production deployment
+- [x] SEO optimization
+
+**Phase 2: Content** (Q1 2025)
+- [ ] MDX blog with syntax highlighting
+- [ ] RSS feed
+- [ ] Post categories/tags
+
+**Phase 3: CV System** (Q1 2025)
+- [ ] Dynamic CV generation
+- [ ] Multiple versions (Full-Stack, AI/ML, Platform/DevOps)
+- [ ] PDF export
+- [ ] Integration with curriculum-vitae repo
+
+**Phase 4: Engagement** (Q2 2025)
+- [ ] Contact form
+- [ ] Case studies
+- [ ] Analytics
+
+**Phase 5: Polish** (Q2 2025)
+- [ ] Theme toggle
+- [ ] Multi-language (EN/PL)
+- [ ] Advanced animations
+
+---
+
+## Documentation
+
+- [Setup Guide](./docs/SETUP.md)
+- [Infrastructure](./docs/INFRASTRUCTURE.md)
+- [Strategy](./docs/STRATEGY.md)
+- [K8s Metrics](./docs/k8s-metrics.md)
 
 ---
 
 ## Deployment
 
-### Manual
+### Environments
+
+- **Development**: Auto-deploy on push to `main`
+- **Production**: Auto-deploy on version tags
+
+### Creating a Release
+
 ```bash
-docker build -t your-username/portfolio:latest .
-docker push your-username/portfolio:latest
-kubectl set image deployment/portfolio-nextjs \
-  nextjs=your-username/portfolio:latest -n portfolio
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Images tagged with:
+- `latest` (development)
+- `v1.0.0`, `v1.0`, `v1` (production)
+- `sha-abc123` (git commit)
+
+---
+
+## Environment Variables
+
+**Local:**
+```bash
+# K8s metrics use mock data by default
+```
+
+**Production (K8s Secrets):**
+```bash
+DATABASE_URL="postgresql://user:password@postgres:5432/portfolio"
+REDIS_HOST="redis"
+REDIS_PORT="6379"
 ```
