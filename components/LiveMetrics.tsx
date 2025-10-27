@@ -28,7 +28,18 @@ export function LiveMetrics() {
   const [metrics, setMetrics] = useState<ClusterMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
+  // Update current time every second
+  useEffect(() => {
+    const timeInterval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timeInterval);
+  }, []);
+
+  // Fetch metrics every 10 seconds
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
@@ -133,7 +144,7 @@ export function LiveMetrics() {
           </span>
         </div>
         <span className="text-xs text-gray-500">
-          {new Date(metrics.timestamp).toLocaleTimeString('en-US', {
+          {currentTime.toLocaleTimeString('en-US', {
             timeZone: 'UTC',
             hour12: false,
             hour: '2-digit',
