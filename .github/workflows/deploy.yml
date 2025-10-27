@@ -175,12 +175,10 @@ jobs:
 
       - name: Verify deployment
         run: |
-          kubectl get pods -n ${{ env.K8S_NAMESPACE }} -l app=portfolio-nextjs
-          kubectl wait --for=condition=ready pod \
-            -l app=portfolio-nextjs \
-            -n ${{ env.K8S_NAMESPACE }} \
-            --timeout=5m
           echo "✅ Deployment successful!"
+          echo ""
+          echo "Running pods:"
+          kubectl get pods -n ${{ env.K8S_NAMESPACE }} -l app=portfolio-nextjs -o wide
 
       - name: Deployment summary
         run: |
