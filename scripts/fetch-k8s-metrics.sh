@@ -9,15 +9,34 @@ set -euo pipefail
 NAMESPACE="${1:-portfolio}"
 OUTPUT_FILE="${2:-/tmp/k8s-metrics.json}"
 
+# Configure kubectl for in-cluster use
+export KUBERNETES_SERVICE_HOST=${KUBERNETES_SERVICE_HOST:-kubernetes.default.svc}
+export KUBERNETES_SERVICE_PORT=${KUBERNETES_SERVICE_PORT:-443}
+
+# Set up kubectl to use in-cluster config
+SA_TOKEN_PATH="/var/run/secrets/kubernetes.io/serviceaccount/token"
+SA_CERT_PATH="/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+KUBE_API="https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}"
+
 # Check if kubectl is available
 if ! command -v kubectl &> /dev/null; then
     echo '{"error": "kubectl not found", "status": "unavailable"}' > "$OUTPUT_FILE"
     exit 1
 fi
 
+# Check if ServiceAccount token exists (in-cluster)
+if [ -f "$SA_TOKEN_PATH" ]; then
+    export KUBECONFIG="/tmp/kubeconfig-$$"
+    kubectl config set-cluster kubernetes --server="$KUBE_API" --certificate-authority="$SA_CERT_PATH" --embed-certs=true
+    kubectl config set-credentials serviceaccount --token="$(cat $SA_TOKEN_PATH)"
+    kubectl config set-context default --cluster=kubernetes --user=serviceaccount --namespace="$NAMESPACE"
+    kubectl config use-context default
+fi
+
 # Check if we can connect to cluster (using a faster command)
 if ! kubectl get namespaces &> /dev/null; then
     echo '{"error": "Cannot connect to cluster", "status": "unavailable"}' > "$OUTPUT_FILE"
+    rm -f "$KUBECONFIG" 2>/dev/null
     exit 1
 fi
 
@@ -210,6 +229,9 @@ main() {
 
     # Output to stdout as well
     cat "$OUTPUT_FILE"
+
+    # Cleanup temp kubeconfig
+    rm -f "$KUBECONFIG" 2>/dev/null
 }
 
 main "$@"
