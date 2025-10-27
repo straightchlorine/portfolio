@@ -51,12 +51,19 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Install bash, kubectl, and jq for K8s metrics script
+RUN apk add --no-cache bash curl jq && \
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/
+
 # Create non-root user for security
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 # Copy necessary files from builder
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/scripts ./scripts
 
 # Copy standalone output (includes minimal node_modules)
 COPY --from=builder /app/.next/standalone ./
