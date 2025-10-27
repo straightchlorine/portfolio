@@ -1,103 +1,289 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Github, Linkedin, Mail, ExternalLink } from "lucide-react";
+import { LiveMetrics } from "@/components/LiveMetrics";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+      <div className="relative z-10 min-h-screen flex flex-col">
+        {/* Navigation */}
+        <nav className="w-full px-6 py-6 border-b border-gray-800/50">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <div className="font-mono text-lg font-bold text-white">
+              <span className="text-purple-400">/</span>codex<span className="text-gray-600">.technologies</span>
+            </div>
+            <div className="flex gap-6 font-mono text-sm">
+              <Link
+                href="https://github.com/straightchlorine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                /github
+              </Link>
+            </div>
+          </div>
+        </nav>
+
+        {/* Hero Section */}
+        <main className="flex-1 px-6 py-16">
+          <div className="max-w-7xl mx-auto">
+            {/* Intro */}
+            <div className="mb-12 animate-in fade-in duration-1000">
+              <div className="mb-6">
+                <span className="font-mono text-green-400 text-sm">piotr@wroclaw:~$</span>
+                <span className="font-mono text-gray-400 text-sm ml-2">whoami</span>
+              </div>
+
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Full-Stack Engineer<br />
+                <span className="text-gray-500">Building AI systems & production infrastructure</span>
+              </h1>
+
+              <div className="space-y-3 font-mono text-lg text-gray-300 max-w-3xl">
+                <p>
+                  <span className="text-purple-400">→</span> Full-Stack Engineer @ Kalasar · RAG systems & Voice AI platforms
+                </p>
+                <p>
+                  <span className="text-green-400">→</span> DSW University · 5.0/5.0 GPA · 4x scholarship recipient
+                </p>
+                <p className="whitespace-nowrap">
+                  <span className="text-orange-400">→</span> 10 years coding experience · Certified IT Professional (EE.08, EE.09)
+                </p>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link
+                  href="https://github.com/straightchlorine"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-mono font-semibold rounded-lg hover:bg-gray-200 transition-all"
+                  aria-label="Visit my GitHub profile"
+                >
+                  <Github className="w-5 h-5" aria-hidden="true" />
+                  GitHub
+                  <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/straightchlorine/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white font-mono font-semibold rounded-lg border border-gray-700 hover:bg-gray-700 transition-all"
+                  aria-label="Visit my LinkedIn profile"
+                >
+                  <Linkedin className="w-5 h-5" aria-hidden="true" />
+                  LinkedIn
+                  <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="mailto:piotrkrzysztoflis@pm.me"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white font-mono font-semibold rounded-lg border border-gray-700 hover:bg-gray-700 transition-all"
+                  aria-label="Send me an email"
+                >
+                  <Mail className="w-5 h-5" aria-hidden="true" />
+                  Contact
+                </Link>
+              </div>
+            </div>
+
+            {/* Live Cluster Status */}
+            <div className="mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
+              <div className="mb-4 font-mono text-sm text-gray-400">
+                <span className="text-green-400">piotr@wroclaw:~$</span>
+                <span className="ml-2">kubectl get pods -n portfolio</span>
+              </div>
+              <ErrorBoundary>
+                <LiveMetrics />
+              </ErrorBoundary>
+            </div>
+
+            {/* Featured Project: Quantum Pipeline */}
+            <div className="mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+              <h2 className="text-2xl font-bold text-white mb-6 font-mono">
+                <span className="text-purple-400">#</span> Featured Project
+              </h2>
+
+              <Link
+                href="https://github.com/straightchlorine/quantum-pipeline"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block bg-gray-900 border border-gray-800 rounded-xl p-8 hover:border-purple-500/50 transition-all"
+                aria-label="View Quantum Computing Pipeline project on GitHub"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
+                      Quantum Computing Pipeline
+                    </h3>
+                    <div className="flex items-center gap-3 font-mono text-sm text-gray-400">
+                      <span className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-green-400 rounded-full" aria-hidden="true" />
+                        Production
+                      </span>
+                      <span aria-hidden="true">•</span>
+                      <span>1.4K+ Docker Pulls</span>
+                      <span aria-hidden="true">•</span>
+                      <span>PyPI Package</span>
+                    </div>
+                  </div>
+                  <ExternalLink className="w-5 h-5 text-gray-600 group-hover:text-purple-400 transition-colors" aria-hidden="true" />
+                </div>
+
+                <p className="text-gray-300 mb-6 leading-relaxed">
+                  Distributed data streaming platform processing 50,000+ quantum experiments monthly across 15 containerized microservices.
+                  Apache Kafka with Confluent Schema Registry, Apache Spark clusters with Iceberg data lake, and complete CI/CD automation.
+                  Multi-variant Docker builds (CPU/GPU) with CUDA achieving 2-5x performance gains.
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {["Kafka", "Spark", "Iceberg", "Airflow", "Docker", "CUDA", "Prometheus"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 bg-gray-800 border border-gray-700 rounded-full text-xs font-mono text-gray-300"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-800">
+                  <div>
+                    <div className="text-2xl font-bold text-purple-400">50K+</div>
+                    <div className="text-xs text-gray-500 font-mono">Experiments/Month</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-blue-400">15</div>
+                    <div className="text-xs text-gray-500 font-mono">Microservices</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-green-400">2-5x</div>
+                    <div className="text-xs text-gray-500 font-mono">GPU Performance</div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+            {/* More Projects */}
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500">
+              <h2 className="text-2xl font-bold text-white mb-6 font-mono">
+                <span className="text-purple-400">#</span> Other Projects
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <Link
+                  href="https://github.com/straightchlorine/wikipedia-knowledge-explorer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-500/50 transition-all"
+                  aria-label="View Wikipedia Knowledge Explorer project on GitHub"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                      Wikipedia Knowledge Explorer
+                    </h3>
+                    <ExternalLink className="w-4 h-4 text-gray-600 group-hover:text-blue-400 transition-colors" aria-hidden="true" />
+                  </div>
+                  <p className="text-sm text-gray-400 mb-4">
+                    Full-stack ML application with K-Means clustering and semantic embeddings.
+                    Containerized microservices with multi-variant Docker builds (GPU + CPU), comprehensive CI/CD with GitHub Actions.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["FastAPI", "React 19", "D3.js", "Docker", "GitHub Actions"].map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-1 bg-gray-800 rounded text-xs font-mono text-gray-400"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+
+                <Link
+                  href="https://github.com/straightchlorine/cloud"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-green-500/50 transition-all"
+                  aria-label="View Self-Hosted Cloud Infrastructure project on GitHub"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-xl font-bold text-white group-hover:text-green-400 transition-colors">
+                      Self-Hosted Cloud Infrastructure
+                    </h3>
+                    <ExternalLink className="w-4 h-4 text-gray-600 group-hover:text-green-400 transition-colors" aria-hidden="true" />
+                  </div>
+                  <p className="text-sm text-gray-400 mb-4">
+                    Complete datacenter infrastructure with monitoring stack (Grafana/Prometheus),
+                    network storage with RAID and btrfs, VPN services, and automated VM provisioning with QEMU/Proxmox.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Kubernetes", "QEMU", "Proxmox", "Grafana", "Prometheus", "Ansible"].map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-1 bg-gray-800 rounded text-xs font-mono text-gray-400"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="w-full px-6 py-8 border-t border-gray-800/50">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-sm text-gray-500">
+              <div className="flex items-center gap-4">
+                <span>Wrocław, Poland</span>
+                <span>•</span>
+                <span>Open to opportunities</span>
+              </div>
+              <div className="flex gap-6">
+                <Link
+                  href="https://github.com/straightchlorine"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  GitHub
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/straightchlorine/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  LinkedIn
+                </Link>
+                <Link
+                  href="https://hub.docker.com/u/straightchlorine"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Docker Hub
+                </Link>
+                <Link
+                  href="https://pypi.org/user/straightchlorine/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  PyPI
+                </Link>
+              </div>
+            </div>
+            <div className="mt-4 text-center text-xs text-gray-600 font-mono">
+              Infrastructure: K3s on Hetzner · CI/CD: GitHub Actions · Cost: €6/mo
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
