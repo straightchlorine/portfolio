@@ -77,8 +77,10 @@ export function LiveMetrics() {
     metrics.pods.details.forEach(pod => {
       let serviceName = 'unknown';
 
-      // Extract service name from pod name
-      if (pod.name.includes('nextjs') || pod.name.includes('portfolio')) {
+      // Extract service name from pod name (order matters - check specific names first)
+      if (pod.name.includes('runner')) {
+        serviceName = 'actions runner';
+      } else if (pod.name.includes('nextjs')) {
         serviceName = 'nextjs';
       } else if (pod.name.includes('postgres')) {
         serviceName = 'postgres';
