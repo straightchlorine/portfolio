@@ -79,7 +79,7 @@ export function LiveMetrics() {
 
       // Extract service name from pod name (order matters - check specific names first)
       if (pod.name.includes('runner')) {
-        serviceName = 'runner';
+        serviceName = 'actions runner';
       } else if (pod.name.includes('nextjs')) {
         serviceName = 'nextjs';
       } else if (pod.name.includes('postgres')) {
