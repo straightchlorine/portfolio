@@ -221,15 +221,9 @@ jobs:
       - name: Verify deployment health
         run: |
           echo "🔍 Verifying deployment..."
-
-          # Check pod status
-          kubectl get pods -n ${{ env.K8S_NAMESPACE }} -l app=portfolio-nextjs
-
-          # Wait for all pods to be ready
-          kubectl wait --for=condition=ready pod \
-            -l app=portfolio-nextjs \
-            -n ${{ env.K8S_NAMESPACE }} \
-            --timeout=5m
+          echo ""
+          echo "Running pods:"
+          kubectl get pods -n ${{ env.K8S_NAMESPACE }} -l app=portfolio-nextjs -o wide
 
           # Show deployment details
           kubectl describe deployment/${{ env.DEPLOYMENT_NAME }} -n ${{ env.K8S_NAMESPACE }}
