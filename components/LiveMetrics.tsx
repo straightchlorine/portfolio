@@ -168,7 +168,7 @@ export function LiveMetrics() {
         {services && Object.keys(services).length > 0 && (
           <div className="py-1">
             <div className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Services</div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="flex flex-wrap gap-2">
               {Object.entries(services).map(([name, counts]) => {
                 const isHealthy = counts.running === counts.total;
                 const hoverGlow = isHealthy
@@ -180,7 +180,7 @@ export function LiveMetrics() {
                 return (
                   <div
                     key={name}
-                    className={`border border-gray-700 bg-gray-800/30 rounded p-2 text-center transition-all duration-300 ease-in-out ${hoverGlow} hover:scale-[1.02]`}
+                    className={`flex-1 min-w-[120px] sm:min-w-[140px] border border-gray-700 bg-gray-800/30 rounded p-2 text-center transition-all duration-300 ease-in-out ${hoverGlow} hover:scale-[1.02]`}
                   >
                     <div className="text-xs text-gray-400 mb-1">{displayName}</div>
                     <div className={`text-sm font-semibold ${textStatusColor}`}>

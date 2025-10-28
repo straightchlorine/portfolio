@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   keywords: ["Full-Stack Engineer", "DevOps", "Platform Engineering", "Kubernetes", "Cloud Native", "RAG Systems", "Machine Learning", "Quantum Computing", "AI Systems"],
   authors: [{ name: "Piotr Krzysztof Lis" }],
   creator: "Piotr Krzysztof Lis",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
