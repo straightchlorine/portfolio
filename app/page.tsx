@@ -6,8 +6,8 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 export default function Home() {
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
-      <div className="relative z-10 min-h-screen flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 overflow-x-hidden">
+      <div className="relative z-10 min-h-screen flex flex-col overflow-x-hidden">
         {/* Navigation */}
         <nav className="w-full px-6 py-6 border-b border-gray-800/50">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -49,7 +49,7 @@ export default function Home() {
                 <p>
                   <span className="text-green-400">→</span> DSW University · 5.0/5.0 GPA · 4x scholarship recipient
                 </p>
-                <p className="whitespace-nowrap">
+                <p>
                   <span className="text-orange-400">→</span> 10 years coding experience · Certified IT Professional (EE.08, EE.09)
                 </p>
               </div>
