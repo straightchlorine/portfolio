@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script"
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Piotr Krzysztof Lis | Full-Stack Engineer",
-  description: "Full-Stack Engineer building AI systems and production infrastructure. RAG systems, Kubernetes, quantum computing pipelines. 5.0 GPA Computer Science student with 10 years coding experience.",
+  description: "Full-Stack Engineer building AI systems and production infrastructure.",
   keywords: ["Full-Stack Engineer", "DevOps", "Platform Engineering", "Kubernetes", "Cloud Native", "RAG Systems", "Machine Learning", "Quantum Computing", "AI Systems"],
   authors: [{ name: "Piotr Krzysztof Lis" }],
   creator: "Piotr Krzysztof Lis",
@@ -22,13 +23,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     title: "Piotr Krzysztof Lis | Full-Stack Engineer",
-    description: "Building AI systems and production infrastructure. RAG systems, Kubernetes, quantum computing pipelines.",
+    description: "Building AI systems and production infrastructure.",
     siteName: "Piotr Krzysztof Lis",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Piotr Krzysztof Lis | Full-Stack Engineer",
-    description: "Building AI systems and production infrastructure. RAG systems, Kubernetes, quantum computing pipelines.",
   },
   robots: {
     index: true,
@@ -47,6 +43,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Script
+          src="https://app.rybbit.io/api/script.js"
+          data-site-id="3b2c616b4e25"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
