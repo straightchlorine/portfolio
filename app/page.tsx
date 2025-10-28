@@ -78,7 +78,7 @@ export default function Home() {
                   <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="mailto:piotrkrzysztoflis@pm.me"
+                  href="mailto:engineering@codextechnologies.org"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white font-mono font-semibold rounded-lg border border-gray-700 hover:bg-gray-700 transition-all"
                   aria-label="Send me an email"
                 >
