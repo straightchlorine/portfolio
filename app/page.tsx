@@ -53,7 +53,7 @@ export default function Home() {
                   <span className="text-purple-400">→</span> Full-Stack Engineer @ Kalasar · RAG systems & Voice AI platforms
                 </p>
                 <p>
-                  <span className="text-green-400">→</span> DSW University · 5.0/5.0 GPA · 4x scholarship recipient
+                  <span className="text-green-400">→</span> DSW University · 5.0/5.0 GPA · 5x scholarship recipient
                 </p>
                 <p>
                   <span className="text-orange-400">→</span> 10 years coding experience · Certified IT Professional (EE.08, EE.09)
@@ -123,31 +123,40 @@ export default function Home() {
                     <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
                       Quantum Computing Pipeline
                     </h3>
-                    <div className="flex items-center gap-3 font-mono text-sm text-gray-400">
-                      <span className="flex items-center gap-1">
-                        <div className="w-2 h-2 bg-green-400 rounded-full" aria-hidden="true" />
-                        Production
-                      </span>
-                      <span aria-hidden="true">•</span>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-xs sm:text-sm text-gray-400">
                       {/* PyPI Package Badge */}
                       <img
                         src="https://badge.fury.io/py/quantum-pipeline.svg"
                         alt="PyPI version"
-                        className="h-4 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
                       />
                       <span aria-hidden="true">•</span>
                       {/* PyPI Downloads Badge */}
                       <img
                         src="https://static.pepy.tech/badge/quantum-pipeline"
                         alt="Total Downloads"
-                        className="h-4 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
                       />
                       <span aria-hidden="true">•</span>
                       {/* Docker Pulls Badge */}
                       <img
                         src="https://img.shields.io/docker/pulls/straightchlorine/quantum-pipeline.svg"
                         alt="Docker Pulls"
-                        className="h-4 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                      />
+                      <span aria-hidden="true">•</span>
+                      {/* Build Status Badge */}
+                      <img
+                        src="https://img.shields.io/github/actions/workflow/status/straightchlorine/quantum-pipeline/pypi-publish.yml.svg"
+                        alt="Build Status"
+                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                      />
+                      <span aria-hidden="true">•</span>
+                      {/* GitHub Stars Badge */}
+                      <img
+                        src="https://img.shields.io/github/stars/straightchlorine/quantum-pipeline.svg"
+                        alt="GitHub Stars"
+                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
                       />
                     </div>
                   </div>

@@ -49,7 +49,7 @@ async function getClusterMetrics(): Promise<ClusterMetrics> {
     }
 
     // Execute the script with timeout
-    const { stdout } = await execAsync(`${scriptPath} portfolio ${outputPath}`, {
+    await execAsync(`${scriptPath} portfolio ${outputPath}`, {
       timeout: 10000, // 10 second timeout
     })
 
