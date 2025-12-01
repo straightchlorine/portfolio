@@ -303,13 +303,13 @@ export default function ExperiencePage() {
                       <li className="flex gap-3">
                         <span className="text-amber-400 mt-1">•</span>
                         <span>
-                          <strong className="text-white">Rector's Scientific Scholarship</strong> for Best Students (2023, 2024, 2025) — Three-Time Recipient
+                          <strong className="text-white">Rector&apos;s Scientific Scholarship</strong> for Best Students (2023, 2024, 2025) &mdash; Three-Time Recipient
                         </span>
                       </li>
                       <li className="flex gap-3">
                         <span className="text-yellow-400 mt-1">•</span>
                         <span>
-                          <strong className="text-white">Prime Minister's Scholarship</strong> (2020, 2021) — Two-Time Recipient
+                          <strong className="text-white">Prime Minister&apos;s Scholarship</strong> (2020, 2021) &mdash; Two-Time Recipient
                         </span>
                       </li>
                     </ul>
