@@ -16,6 +16,12 @@ export default function Home() {
             </div>
             <div className="flex gap-6 font-mono text-sm">
               <Link
+                href="/experience"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                /experience
+              </Link>
+              <Link
                 href="https://github.com/straightchlorine"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -123,22 +129,42 @@ export default function Home() {
                         Production
                       </span>
                       <span aria-hidden="true">•</span>
-                      <span>1.4K+ Docker Pulls</span>
+                      {/* PyPI Package Badge */}
+                      <img
+                        src="https://badge.fury.io/py/quantum-pipeline.svg"
+                        alt="PyPI version"
+                        className="h-4 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                      />
                       <span aria-hidden="true">•</span>
-                      <span>PyPI Package</span>
+                      {/* PyPI Downloads Badge */}
+                      <img
+                        src="https://static.pepy.tech/badge/quantum-pipeline"
+                        alt="Total Downloads"
+                        className="h-4 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                      />
+                      <span aria-hidden="true">•</span>
+                      {/* Docker Pulls Badge */}
+                      <img
+                        src="https://img.shields.io/docker/pulls/straightchlorine/quantum-pipeline.svg"
+                        alt="Docker Pulls"
+                        className="h-4 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                      />
                     </div>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-600 group-hover:text-purple-400 transition-colors" aria-hidden="true" />
                 </div>
 
                 <p className="text-gray-300 mb-6 leading-relaxed">
-                  Distributed data streaming platform processing 50,000+ quantum experiments monthly across 15 containerized microservices.
-                  Apache Kafka with Confluent Schema Registry, Apache Spark clusters with Iceberg data lake, and complete CI/CD automation.
-                  Multi-variant Docker builds (CPU/GPU) with CUDA achieving 2-5x performance gains.
+                  Extensible framework for quantum algorithm execution on IBM Quantum hardware and
+                  accelerated classical simulation via Qiskit Aer. Integrated into a production-grade
+                  data streaming platform processing 50,000+ quantum experiments monthly across 15
+                  containerized microservices. Apache Kafka with Schema Registry, Apache Spark,
+                  and Apache Iceberg data lake, orchestrated with Airflow and complete CI/CD automation.
+                  Multi-variant Docker builds (CPU/GPU) with CUDA achieving 2-5x GPU acceleration over CPU baselines.
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {["Kafka", "Spark", "Iceberg", "Airflow", "Docker", "CUDA", "Prometheus"].map((tech) => (
+                  {["Kafka", "Spark", "Iceberg", "IBM Cloud", "Airflow", "Docker", "CUDA", "Prometheus", "Grafana", "S3", "MinIO"].map((tech) => (
                     <span
                       key={tech}
                       className="px-3 py-1 bg-gray-800 border border-gray-700 rounded-full text-xs font-mono text-gray-300"
@@ -148,18 +174,22 @@ export default function Home() {
                   ))}
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-800">
-                  <div>
-                    <div className="text-2xl font-bold text-purple-400">50K+</div>
-                    <div className="text-xs text-gray-500 font-mono">Experiments/Month</div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-gray-800">
+                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+                    <div className="text-2xl font-bold text-blue-400 transition-all duration-300 group-hover/stat:scale-110">50K+</div>
+                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">Monthly Experiments</div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-blue-400">15</div>
-                    <div className="text-xs text-gray-500 font-mono">Microservices</div>
+                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+                    <div className="text-2xl font-bold text-purple-400 transition-all duration-300 group-hover/stat:scale-110">9</div>
+                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">ML Feature Tables</div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-green-400">2-5x</div>
-                    <div className="text-xs text-gray-500 font-mono">GPU Performance</div>
+                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+                    <div className="text-2xl font-bold text-orange-400 transition-all duration-300 group-hover/stat:scale-110">15</div>
+                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">Microservices</div>
+                  </div>
+                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '800ms' }}>
+                    <div className="text-2xl font-bold text-green-400 transition-all duration-300 group-hover/stat:scale-110">2-5x</div>
+                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">GPU Performance</div>
                   </div>
                 </div>
               </Link>
