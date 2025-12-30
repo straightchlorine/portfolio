@@ -1,0 +1,56 @@
+---
+# CI Pipeline - Tests and Checks on Pull Requests
+# Triggered on pull request events
+
+steps:
+  checkout:
+    image: alpine/git
+    commands:
+      - git fetch origin
+      - git checkout ${CI_COMMIT_SHA}
+
+  setup-pnpm:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - npm install -g pnpm@10
+
+  install-dependencies:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - pnpm install --frozen-lockfile
+
+  lint:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - pnpm lint
+
+  type-check:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - pnpm tsc --noEmit
+
+  build:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+      SKIP_ENV_VALIDATION: "true"
+    commands:
+      - pnpm build
+
+# Trigger on pull requests to master branch
+trigger:
+  event: pull_request
+  branch: master

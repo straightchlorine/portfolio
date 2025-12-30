@@ -1,0 +1,130 @@
+---
+# Deployment Pipeline - Build, Push, and Deploy on master push
+# Triggered on push to master branch (excluding version tags)
+
+variables:
+  K8S_NAMESPACE: portfolio
+  DEPLOYMENT_NAME: portfolio-nextjs
+  CONTAINER_NAME: nextjs
+
+steps:
+  checkout:
+    image: alpine/git
+    commands:
+      - git fetch origin
+      - git checkout ${CI_COMMIT_SHA}
+
+  # ============================================
+  # Stage 1: Test
+  # ============================================
+  setup-pnpm-test:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - npm install -g pnpm@10
+
+  install-dependencies-test:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - pnpm install --frozen-lockfile
+
+  lint-test:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - pnpm lint
+
+  type-check-test:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+    commands:
+      - pnpm tsc --noEmit
+
+  build-test:
+    image: node:20-alpine
+    environment:
+      PNPM_HOME: /root/.pnpm
+      PATH: ${PNPM_HOME}:$PATH
+      SKIP_ENV_VALIDATION: "true"
+    commands:
+      - pnpm build
+
+  # ============================================
+  # Stage 2: Build and Push Docker Image
+  # ============================================
+  build-and-push:
+    image: woodpeckerci/plugin-docker-buildx:latest
+    settings:
+      repo:
+        from_secret: docker_repo
+      registry: docker.io
+      dockerfile: Dockerfile
+      platforms: linux/amd64
+      username:
+        from_secret: dockerhub_username
+      password:
+        from_secret: dockerhub_token
+      tags:
+        - main-${CI_COMMIT_SHA:0:7}
+        - dev
+      build_args:
+        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+    depends_on:
+      - build-test
+
+  build-and-push-ghcr:
+    image: woodpeckerci/plugin-docker-buildx:latest
+    settings:
+      repo:
+        from_secret: ghcr_repo
+      registry: ghcr.io
+      dockerfile: Dockerfile
+      platforms: linux/amd64
+      username:
+        from_secret: ghcr_username
+      password:
+        from_secret: ghcr_token
+      tags:
+        - main-${CI_COMMIT_SHA:0:7}
+        - dev
+      build_args:
+        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+    depends_on:
+      - build-test
+
+  # ============================================
+  # Stage 3: Deploy to Kubernetes
+  # ============================================
+  deploy:
+    image: alpine/k8s:latest
+    environment:
+      KUBECONFIG: /tmp/kubeconfig
+    commands:
+      - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
+      - IMAGE="ghcr.io/${GHCR_REPO}:main-${CI_COMMIT_SHA:0:7}"
+      - echo "Deploying development build: $IMAGE"
+      - kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=$IMAGE -n ${K8S_NAMESPACE}
+      - kubectl annotate deployment/${DEPLOYMENT_NAME} kubernetes.io/change-cause="Deploy dev build ${CI_COMMIT_SHA:0:7} ($(date +%Y-%m-%d\ %H:%M:%S))" -n ${K8S_NAMESPACE} --overwrite
+      - kubectl rollout status deployment/${DEPLOYMENT_NAME} -n ${K8S_NAMESPACE} --timeout=10m
+      - kubectl get pods -n ${K8S_NAMESPACE} -l app=portfolio-nextjs -o wide
+    secrets:
+      - kubeconfig_content
+      - ghcr_repo
+    depends_on:
+      - build-and-push-ghcr
+
+# Trigger on push to master (but not on tags)
+trigger:
+  event: push
+  branch: master
+  exclude:
+    - refs/tags/*
