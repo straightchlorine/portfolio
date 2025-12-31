@@ -1,5 +1,4 @@
 # Deployment Pipeline - Build, Push, and Deploy on master push
-# Triggered on push to master branch (excluding version tags)
 
 variables:
   K8S_NAMESPACE: portfolio

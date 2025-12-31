@@ -1,6 +1,4 @@
----
 # CI Pipeline - Tests and Checks on Pull Requests
-# Triggered on pull request events
 
 steps:
   checkout:
