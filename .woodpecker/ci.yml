@@ -6,22 +6,17 @@
 skip_clone: true  # Disable automatic clone, we define a custom one with conditions
 
 steps:
-  # Custom clone step - only runs when we'll actually execute tests
+  # Custom clone step - only runs on pull requests
   clone:
     image: woodpeckerci/plugin-git:latest
     when:
       - event: pull_request
-      - event: push
-        branch: master
 
   ci-test:
     image: node:20-alpine
     when:
-      # Test all pull requests
+      # Test all pull requests only
       - event: pull_request
-      # Also test direct pushes to master (but not feature branch pushes)
-      - event: push
-        branch: master
     depends_on:
       - clone
     environment:

@@ -21,9 +21,9 @@ steps:
   deploy-test:
     image: node:20-alpine
     when:
-      event: push
-      branch: master
-      exclude_tags: true
+      - event: push
+        branch: master
+        exclude_tags: true
     depends_on:
       - clone
     environment:
@@ -41,9 +41,9 @@ steps:
   deploy-build-and-push-dockerhub:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
-      event: push
-      branch: master
-      exclude_tags: true
+      - event: push
+        branch: master
+        exclude_tags: true
     depends_on:
       - deploy-test
     settings:
@@ -65,9 +65,9 @@ steps:
   deploy-build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
-      event: push
-      branch: master
-      exclude_tags: true
+      - event: push
+        branch: master
+        exclude_tags: true
     depends_on:
       - deploy-test
     settings:
@@ -90,9 +90,9 @@ steps:
   deploy-k8s:
     image: alpine/k8s:latest
     when:
-      event: push
-      branch: master
-      exclude_tags: true
+      - event: push
+        branch: master
+        exclude_tags: true
     depends_on:
       - deploy-build-and-push-ghcr
     environment:
