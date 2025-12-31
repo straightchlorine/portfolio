@@ -12,8 +12,6 @@ steps:
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     commands:
       - git fetch origin
       - git checkout ${CI_COMMIT_SHA}
@@ -24,8 +22,6 @@ steps:
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -37,8 +33,6 @@ steps:
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -50,8 +44,6 @@ steps:
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -63,8 +55,6 @@ steps:
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -76,8 +66,6 @@ steps:
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -88,12 +76,9 @@ steps:
   # Build and Push Docker Image
   build-and-push:
     image: woodpeckerci/plugin-docker-buildx:latest
-    privileged: true
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     settings:
       repo:
         from_secret: docker_repo
@@ -114,12 +99,9 @@ steps:
 
   build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
-    privileged: true
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     settings:
       repo:
         from_secret: ghcr_repo
@@ -144,8 +126,6 @@ steps:
     when:
       event: push
       branch: master
-      exclude:
-        - refs/tags/*
     environment:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:
