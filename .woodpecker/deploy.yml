@@ -85,8 +85,6 @@ steps:
         - dev
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
-    depends_on:
-      - deploy-test
 
   # Deploy to Kubernetes
   deploy-k8s:
