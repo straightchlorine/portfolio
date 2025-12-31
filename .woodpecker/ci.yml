@@ -3,12 +3,18 @@
 steps:
   checkout:
     image: alpine/git
+    when:
+      event: pull_request
+      branch: master
     commands:
       - git fetch origin
       - git checkout ${CI_COMMIT_SHA}
 
   setup-pnpm:
     image: node:20-alpine
+    when:
+      event: pull_request
+      branch: master
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -17,6 +23,9 @@ steps:
 
   install-dependencies:
     image: node:20-alpine
+    when:
+      event: pull_request
+      branch: master
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -25,6 +34,9 @@ steps:
 
   lint:
     image: node:20-alpine
+    when:
+      event: pull_request
+      branch: master
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -33,6 +45,9 @@ steps:
 
   type-check:
     image: node:20-alpine
+    when:
+      event: pull_request
+      branch: master
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -41,14 +56,12 @@ steps:
 
   build:
     image: node:20-alpine
+    when:
+      event: pull_request
+      branch: master
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
       SKIP_ENV_VALIDATION: "true"
     commands:
       - pnpm build
-
-# Trigger on pull requests to master branch
-trigger:
-  event: pull_request
-  branch: master
