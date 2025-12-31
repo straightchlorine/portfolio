@@ -1,12 +1,13 @@
 # Build Workflow - Tests and builds Docker images on master push
 # Triggered on master branch pushes (excluding tags)
 
+when:
+  event: push
+  branch: master
+
 steps:
   - name: build-test
     image: node:20-alpine
-    when:
-      event: push
-      branch: master
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -20,9 +21,6 @@ steps:
 
   - name: build-dockerhub
     image: woodpeckerci/plugin-docker-buildx:latest
-    when:
-      event: push
-      branch: master
     depends_on:
       - build-test
     settings:
@@ -43,9 +41,6 @@ steps:
 
   - name: build-ghcr
     image: woodpeckerci/plugin-docker-buildx:latest
-    when:
-      event: push
-      branch: master
     depends_on:
       - build-test
     settings:

@@ -2,12 +2,13 @@
 # Triggered on master branch pushes after build completes
 # Depends on: build workflow
 
+when:
+  event: push
+  branch: master
+
 steps:
   - name: deploy-k8s
     image: alpine/k8s:latest
-    when:
-      event: push
-      branch: master
     environment:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:

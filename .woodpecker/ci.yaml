@@ -1,11 +1,12 @@
 # CI Workflow - Tests and linting on pull requests
 # Triggered only on pull_request events
 
+when:
+  event: pull_request
+
 steps:
   - name: ci-lint-and-test
     image: node:20-alpine
-    when:
-      event: pull_request
     environment:
       SKIP_ENV_VALIDATION: "true"
     commands:
