@@ -9,12 +9,13 @@ when:
 steps:
   - name: deploy-k8s
     image: alpine:latest
+    secrets:
+      - kubeconfig_content
+      - ghcr_repo
     environment:
       KUBECONFIG: /tmp/kubeconfig
-      KUBECONFIG_CONTENT:
-        from_secret: kubeconfig_content
-      GHCR_REPO:
-        from_secret: ghcr_repo
+      KUBECONFIG_CONTENT: $KUBECONFIG_CONTENT
+      GHCR_REPO: $GHCR_REPO
     commands:
       - apk add --no-cache kubectl coreutils
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
