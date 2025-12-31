@@ -2,10 +2,6 @@
 
 Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-ready infrastructure.
 
-<needs a rewrite>
-
-**Author:** [Piotr Krzysztof Lis](https://github.com/straightchlorine)
-
 ---
 
 ## Features
@@ -69,12 +65,6 @@ See [docs/INFRASTRUCTURE.md](./docs/INFRASTRUCTURE.md) for details.
 - PostgreSQL 16
 - Redis 7
 - Traefik + cert-manager
-
-**DevOps:**
-- GitHub Actions
-- Actions Runner Controller
-- Docker (multi-platform)
-- GHCR + Docker Hub
 
 ---
 
