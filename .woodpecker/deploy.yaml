@@ -15,18 +15,15 @@ steps:
         from_secret: kubeconfig_content
       GHCR_REPO:
         from_secret: ghcr_repo
-      K8S_NAMESPACE: portfolio
-      DEPLOYMENT_NAME: portfolio-nextjs
-      CONTAINER_NAME: nextjs
     commands:
       - apk add --no-cache kubectl coreutils
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
       - IMAGE="ghcr.io/${GHCR_REPO}:main-${CI_COMMIT_SHA:0:7}"
       - printf "Deploying development build %s\n" "$IMAGE"
-      - kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=$IMAGE -n ${K8S_NAMESPACE}
-      - kubectl annotate deployment/${DEPLOYMENT_NAME} kubernetes.io/change-cause="Deploy dev build ${CI_COMMIT_SHA:0:7} ($(date '+%Y-%m-%d %H:%M:%S'))" -n ${K8S_NAMESPACE} --overwrite
-      - kubectl rollout status deployment/${DEPLOYMENT_NAME} -n ${K8S_NAMESPACE} --timeout=10m
-      - kubectl get pods -n ${K8S_NAMESPACE} -l app=portfolio-nextjs -o wide
+      - kubectl set image deployment/portfolio nextjs=$IMAGE -n portfolio
+      - kubectl annotate deployment/portfolio kubernetes.io/change-cause="Deploy dev build ${CI_COMMIT_SHA:0:7} ($(date '+%Y-%m-%d %H:%M:%S'))" -n portfolio --overwrite
+      - kubectl rollout status deployment/portfolio -n portfolio --timeout=10m
+      - kubectl get pods -n portfolio -l app=portfolio -o wide
 
 depends_on:
   - build
