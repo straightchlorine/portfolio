@@ -8,7 +8,7 @@ when:
 
 steps:
   - name: deploy-k8s
-    image: alpine/k8s:latest
+    image: alpine:latest
     environment:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:
@@ -19,6 +19,7 @@ steps:
       DEPLOYMENT_NAME: portfolio-nextjs
       CONTAINER_NAME: nextjs
     commands:
+      - apk add --no-cache kubectl coreutils
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
       - IMAGE="ghcr.io/${GHCR_REPO}:main-${CI_COMMIT_SHA:0:7}"
       - printf "Deploying development build %s\n" "$IMAGE"
