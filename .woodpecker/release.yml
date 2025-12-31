@@ -7,15 +7,6 @@ variables:
   CONTAINER_NAME: nextjs
 
 steps:
-  checkout:
-    image: alpine/git
-    when:
-      event: tag
-      ref: refs/tags/v*.*.*
-    commands:
-      - git fetch origin --tags
-      - git checkout ${CI_COMMIT_SHA}
-
   # Validate Version
   validate-version:
     image: alpine:latest
@@ -38,7 +29,7 @@ steps:
         echo "Version format valid: $VERSION_NO_V"
 
   # Test
-  test:
+  release-test:
     image: node:20-alpine
     when:
       event: tag
@@ -78,7 +69,7 @@ steps:
       build_args:
         - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
     depends_on:
-      - test
+      - release-test
 
   # Build and Push to GHCR
   build-and-push-ghcr:
@@ -102,7 +93,7 @@ steps:
       build_args:
         - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
     depends_on:
-      - test
+      - release-test
 
   # Deploy to Kubernetes
   deploy:

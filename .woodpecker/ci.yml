@@ -1,7 +1,8 @@
 # CI Pipeline - Tests and Checks on Pull Requests
+# Runs on pull requests to master branch
 
 steps:
-  test:
+  ci-test:
     image: node:20-alpine
     when:
       event: pull_request
