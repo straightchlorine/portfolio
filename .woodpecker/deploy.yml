@@ -1,4 +1,3 @@
----
 # Deployment Pipeline - Build, Push, and Deploy on master push
 # Triggered on push to master branch (excluding version tags)
 
@@ -14,9 +13,7 @@ steps:
       - git fetch origin
       - git checkout ${CI_COMMIT_SHA}
 
-  # ============================================
-  # Stage 1: Test
-  # ============================================
+  # Test
   setup-pnpm-test:
     image: node:20-alpine
     environment:
@@ -58,9 +55,7 @@ steps:
     commands:
       - pnpm build
 
-  # ============================================
-  # Stage 2: Build and Push Docker Image
-  # ============================================
+  # Build and Push Docker Image
   build-and-push:
     image: woodpeckerci/plugin-docker-buildx:latest
     settings:
@@ -101,9 +96,7 @@ steps:
     depends_on:
       - build-test
 
-  # ============================================
-  # Stage 3: Deploy to Kubernetes
-  # ============================================
+  # Deploy to Kubernetes
   deploy:
     image: alpine/k8s:latest
     environment:
