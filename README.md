@@ -21,8 +21,6 @@ Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-r
 
 ## Architecture
 
-(new graph needed)
-
 **Stack:**
 - K3s on Hetzner Cloud
 - Traefik ingress with cert-manager
@@ -119,12 +117,6 @@ pnpm lint         # ESLint
 ---
 
 ## Roadmap
-
-**Phase 1: MVP** (Current)
-- [x] Basic portfolio
-- [x] Live K8s metrics
-- [x] Production deployment
-- [x] SEO optimization
 
 **Phase 2: Content** (Q1 2025)
 - [ ] MDX blog with syntax highlighting
