@@ -1,11 +1,6 @@
 # Release Pipeline - Build, Push, and Deploy on version tags
 # Triggered on semantic version tags (v1.2.3, v2.0.0, etc.)
 
-trigger:
-  event: tag
-  ref:
-    - refs/tags/v*.*.*
-
 variables:
   K8S_NAMESPACE: portfolio
   DEPLOYMENT_NAME: portfolio-nextjs
@@ -14,6 +9,10 @@ variables:
 steps:
   checkout:
     image: alpine/git
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     commands:
       - git fetch origin --tags
       - git checkout ${CI_COMMIT_SHA}
@@ -21,6 +20,10 @@ steps:
   # Validate Version
   validate-version:
     image: alpine:latest
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     commands:
       - |
         VERSION=${CI_COMMIT_TAG}
@@ -39,6 +42,10 @@ steps:
   # Test
   setup-pnpm-test:
     image: node:20-alpine
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -49,6 +56,10 @@ steps:
 
   install-dependencies-test:
     image: node:20-alpine
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -57,6 +68,10 @@ steps:
 
   lint-test:
     image: node:20-alpine
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -65,6 +80,10 @@ steps:
 
   type-check-test:
     image: node:20-alpine
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -73,6 +92,10 @@ steps:
 
   build-test:
     image: node:20-alpine
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -83,6 +106,11 @@ steps:
   # Build and Push Docker Image
   build-and-push-dockerhub:
     image: woodpeckerci/plugin-docker-buildx:latest
+    privileged: true
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     settings:
       repo:
         from_secret: docker_repo
@@ -103,6 +131,11 @@ steps:
 
   build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
+    privileged: true
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     settings:
       repo:
         from_secret: ghcr_repo
@@ -124,6 +157,10 @@ steps:
   # Deploy to Kubernetes
   deploy:
     image: alpine/k8s:latest
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     environment:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:
@@ -145,6 +182,10 @@ steps:
   # Smoke Tests
   smoke-tests:
     image: alpine:latest
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     commands:
       - apk add --no-cache curl
       - |
@@ -173,6 +214,10 @@ steps:
   # Create Release
   create-release:
     image: alpine/git:latest
+    when:
+      event: tag
+      ref:
+        - refs/tags/v*.*.*
     commands:
       - apk add --no-cache curl jq
       - |

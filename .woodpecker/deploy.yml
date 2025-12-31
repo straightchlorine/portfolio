@@ -1,12 +1,6 @@
 # Deployment Pipeline - Build, Push, and Deploy on master push
 # Triggered on push to master branch (excluding version tags)
 
-trigger:
-  event: push
-  branch: master
-  exclude:
-    - refs/tags/*
-
 variables:
   K8S_NAMESPACE: portfolio
   DEPLOYMENT_NAME: portfolio-nextjs
@@ -15,6 +9,11 @@ variables:
 steps:
   checkout:
     image: alpine/git
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     commands:
       - git fetch origin
       - git checkout ${CI_COMMIT_SHA}
@@ -22,6 +21,11 @@ steps:
   # Test
   setup-pnpm-test:
     image: node:20-alpine
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -30,6 +34,11 @@ steps:
 
   install-dependencies-test:
     image: node:20-alpine
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -38,6 +47,11 @@ steps:
 
   lint-test:
     image: node:20-alpine
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -46,6 +60,11 @@ steps:
 
   type-check-test:
     image: node:20-alpine
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -54,6 +73,11 @@ steps:
 
   build-test:
     image: node:20-alpine
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -64,6 +88,12 @@ steps:
   # Build and Push Docker Image
   build-and-push:
     image: woodpeckerci/plugin-docker-buildx:latest
+    privileged: true
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     settings:
       repo:
         from_secret: docker_repo
@@ -84,6 +114,12 @@ steps:
 
   build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
+    privileged: true
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     settings:
       repo:
         from_secret: ghcr_repo
@@ -105,6 +141,11 @@ steps:
   # Deploy to Kubernetes
   deploy:
     image: alpine/k8s:latest
+    when:
+      event: push
+      branch: master
+      exclude:
+        - refs/tags/*
     environment:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:
