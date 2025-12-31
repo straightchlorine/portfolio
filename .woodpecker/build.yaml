@@ -1,14 +1,12 @@
 # Build Workflow - Tests and builds Docker images on master push
 # Triggered on master branch pushes (excluding tags)
-# Builds and pushes images to both DockerHub and GHCR
 
 steps:
-  build-test:
+  - name: build-test
     image: node:20-alpine
     when:
-      - event: push
-        branch: master
-        exclude_tags: true
+      event: push
+      branch: master
     environment:
       PNPM_HOME: /root/.pnpm
       PATH: ${PNPM_HOME}:$PATH
@@ -20,12 +18,11 @@ steps:
       - pnpm tsc --noEmit
       - pnpm build
 
-  build-dockerhub:
+  - name: build-dockerhub
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
-      - event: push
-        branch: master
-        exclude_tags: true
+      event: push
+      branch: master
     depends_on:
       - build-test
     settings:
@@ -44,12 +41,11 @@ steps:
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
 
-  build-ghcr:
+  - name: build-ghcr
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
-      - event: push
-        branch: master
-        exclude_tags: true
+      event: push
+      branch: master
     depends_on:
       - build-test
     settings:

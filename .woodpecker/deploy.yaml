@@ -1,15 +1,13 @@
 # Deploy Workflow - Deploys to Kubernetes
 # Triggered on master branch pushes after build completes
 # Depends on: build workflow
-# Note: build workflow handles artifact creation (Docker images)
 
 steps:
-  deploy-k8s:
+  - name: deploy-k8s
     image: alpine/k8s:latest
     when:
-      - event: push
-        branch: master
-        exclude_tags: true
+      event: push
+      branch: master
     environment:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:
@@ -28,6 +26,5 @@ steps:
       - kubectl rollout status deployment/${DEPLOYMENT_NAME} -n ${K8S_NAMESPACE} --timeout=10m
       - kubectl get pods -n ${K8S_NAMESPACE} -l app=portfolio-nextjs -o wide
 
-# Workflow-level dependency
 depends_on:
   - build
