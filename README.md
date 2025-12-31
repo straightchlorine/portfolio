@@ -78,33 +78,6 @@ pnpm lint         # ESLint
 
 ---
 
-## CI/CD Workflows
-
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| ci.yml | Pull requests | Linting & type checks |
-| deploy.yml | Push to `main` | Deploy to development |
-| release.yml | Version tags (`v*.*.*`) | Deploy to production |
-
----
-
-## Key Features
-
-### Live Kubernetes Metrics
-
-- Executes `scripts/fetch-k8s-metrics.sh` to query K8s API
-- Displays pod status, restarts, and health
-- Updates every 10 seconds
-- Falls back to mock data if cluster unavailable
-
-### Auto-Generated Images
-
-- Favicon: Purple `/` on dark background
-- OG Image: Terminal-styled card with name and title
-- Generated via Next.js `ImageResponse` API
-
----
-
 ## Roadmap
 
 **Phase 2: Content** (Q1 2025)
