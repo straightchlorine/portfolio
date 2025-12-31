@@ -10,19 +10,9 @@ Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-r
 
 ## Features
 
-### Current (MVP)
-
-- Live Kubernetes cluster metrics on homepage
-- Next.js 15 with App Router, React 19, TypeScript
-- Automated CI/CD with GitHub Actions and self-hosted runners
-- Production deployment on K3s (Hetzner)
-- Auto-generated Open Graph images and favicon
-- Multi-registry Docker builds (GHCR + Docker Hub)
-
 ### Planned
 
 - Technical blog (MDX-powered)
-- Interactive CV system (integration with `/home/zweiss/code/curriculum-vitae`)
 - Contact form
 - Project case studies
 - Multi-language support (EN/PL)
@@ -31,18 +21,12 @@ Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-r
 
 ## Architecture
 
-```
-Internet → Cloudflare → Traefik (TLS) → Next.js (3 pods)
-                                           ↓
-                                    PostgreSQL + Redis
-
-GitHub Push → Actions → ARC Runners → kubectl deploy
-```
+(new graph needed)
 
 **Stack:**
 - K3s on Hetzner Cloud
 - Traefik ingress with cert-manager
-- GitHub Actions with self-hosted runners
+- GitHub Actions with self-hosted runners (woodpecker now)
 - GHCR + Docker Hub registries
 
 ---
