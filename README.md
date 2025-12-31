@@ -58,42 +58,6 @@ See [docs/INFRASTRUCTURE.md](./docs/INFRASTRUCTURE.md) for details.
 
 ---
 
-## Project Structure
-
-```
-portfolio/
-├── app/
-│   ├── api/              # Metrics & health endpoints
-│   ├── tech-stack/       # WIP
-│   ├── icon.tsx          # Favicon generation
-│   ├── opengraph-image.tsx
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ErrorBoundary.tsx
-│   └── LiveMetrics.tsx
-├── k8s/                  # Kubernetes manifests
-│   ├── 00-namespace/
-│   ├── 01-postgres/
-│   ├── 02-redis/
-│   ├── 03-nextjs/
-│   ├── 04-ingress/
-│   └── 05-network-policies/
-├── scripts/
-│   └── fetch-k8s-metrics.sh
-├── docs/
-│   ├── SETUP.md
-│   ├── INFRASTRUCTURE.md
-│   ├── STRATEGY.md
-│   └── k8s-metrics.md
-└── .github/workflows/
-    ├── ci.yml
-    ├── deploy.yml
-    └── release.yml
-```
-
----
-
 ## Tech Stack
 
 **Frontend:**
