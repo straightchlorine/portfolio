@@ -1,12 +1,16 @@
-# CI Pipeline - Tests and Checks on Pull Requests
+# CI Pipeline - Tests and Checks
 # Based on official Woodpecker examples (woodpecker-ci/woodpecker, LemmyNet/lemmy-js-client)
+# Avoids duplicate testing: tests on PR creation OR direct push to master, not both
 
 steps:
   ci-test:
     image: node:20-alpine
     when:
-      event: pull_request
-      branch: master
+      # Test all pull requests
+      - event: pull_request
+      # Also test direct pushes to master (but not feature branch pushes)
+      - event: push
+        branch: master
     environment:
       SKIP_ENV_VALIDATION: "true"
     commands:
