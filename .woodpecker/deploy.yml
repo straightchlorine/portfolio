@@ -26,11 +26,12 @@ steps:
       - pnpm build
 
   # Build and Push Docker Image
-  build-and-push:
+  deploy-build-and-push-dockerhub:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
       event: push
       branch: master
+      exclude_tags: true
     settings:
       repo:
         from_secret: docker_repo
@@ -49,7 +50,7 @@ steps:
     depends_on:
       - deploy-test
 
-  build-and-push-ghcr:
+  deploy-build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
       event: push
@@ -74,7 +75,7 @@ steps:
       - deploy-test
 
   # Deploy to Kubernetes
-  deploy:
+  deploy-k8s:
     image: alpine/k8s:latest
     when:
       event: push
@@ -95,4 +96,4 @@ steps:
       - kubectl rollout status deployment/${DEPLOYMENT_NAME} -n ${K8S_NAMESPACE} --timeout=10m
       - kubectl get pods -n ${K8S_NAMESPACE} -l app=portfolio-nextjs -o wide
     depends_on:
-      - build-and-push-ghcr
+      - deploy-build-and-push-ghcr

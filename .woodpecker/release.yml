@@ -72,7 +72,7 @@ steps:
       - release-test
 
   # Build and Push to GHCR
-  build-and-push-ghcr:
+  release-build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
       event: tag
@@ -96,7 +96,7 @@ steps:
       - release-test
 
   # Deploy to Kubernetes
-  deploy:
+  release-deploy-k8s:
     image: alpine/k8s:latest
     when:
       event: tag
@@ -117,10 +117,10 @@ steps:
       - kubectl get pods -n ${K8S_NAMESPACE} -l app=portfolio-nextjs -o wide
       - kubectl describe deployment/${DEPLOYMENT_NAME} -n ${K8S_NAMESPACE}
     depends_on:
-      - build-and-push-ghcr
+      - release-build-and-push-ghcr
 
   # Smoke Tests
-  smoke-tests:
+  release-smoke-tests:
     image: alpine:latest
     when:
       event: tag
@@ -148,10 +148,10 @@ steps:
           exit 1
         fi
     depends_on:
-      - deploy
+      - release-deploy-k8s
 
   # Create Release
-  create-release:
+  release-create-release:
     image: alpine/git:latest
     when:
       event: tag
@@ -194,4 +194,4 @@ steps:
       CODEBERG_TOKEN:
         from_secret: codeberg_token
     depends_on:
-      - smoke-tests
+      - release-smoke-tests
