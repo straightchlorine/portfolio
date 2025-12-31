@@ -1,60 +1,7 @@
 # CI Pipeline - Tests and Checks on Pull Requests
 
 steps:
-  checkout:
-    image: alpine/git
-    when:
-      event: pull_request
-      branch: master
-    commands:
-      - git fetch origin
-      - git checkout ${CI_COMMIT_SHA}
-
-  setup-pnpm:
-    image: node:20-alpine
-    when:
-      event: pull_request
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - npm install -g pnpm@10
-
-  install-dependencies:
-    image: node:20-alpine
-    when:
-      event: pull_request
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - pnpm install --frozen-lockfile
-
-  lint:
-    image: node:20-alpine
-    when:
-      event: pull_request
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - pnpm lint
-
-  type-check:
-    image: node:20-alpine
-    when:
-      event: pull_request
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - pnpm tsc --noEmit
-
-  build:
+  test:
     image: node:20-alpine
     when:
       event: pull_request
@@ -64,4 +11,8 @@ steps:
       PATH: ${PNPM_HOME}:$PATH
       SKIP_ENV_VALIDATION: "true"
     commands:
+      - npm install -g pnpm@10
+      - pnpm install --frozen-lockfile
+      - pnpm lint
+      - pnpm tsc --noEmit
       - pnpm build

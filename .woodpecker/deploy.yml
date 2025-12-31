@@ -16,51 +16,7 @@ steps:
       - git checkout ${CI_COMMIT_SHA}
 
   # Test
-  setup-pnpm-test:
-    image: node:20-alpine
-    when:
-      event: push
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - npm install -g pnpm@10
-
-  install-dependencies-test:
-    image: node:20-alpine
-    when:
-      event: push
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - pnpm install --frozen-lockfile
-
-  lint-test:
-    image: node:20-alpine
-    when:
-      event: push
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - pnpm lint
-
-  type-check-test:
-    image: node:20-alpine
-    when:
-      event: push
-      branch: master
-    environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
-    commands:
-      - pnpm tsc --noEmit
-
-  build-test:
+  test:
     image: node:20-alpine
     when:
       event: push
@@ -70,6 +26,10 @@ steps:
       PATH: ${PNPM_HOME}:$PATH
       SKIP_ENV_VALIDATION: "true"
     commands:
+      - npm install -g pnpm@10
+      - pnpm install --frozen-lockfile
+      - pnpm lint
+      - pnpm tsc --noEmit
       - pnpm build
 
   # Build and Push Docker Image
@@ -94,7 +54,7 @@ steps:
       build_args:
         - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
     depends_on:
-      - build-test
+      - test
 
   build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
@@ -117,7 +77,7 @@ steps:
       build_args:
         - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
     depends_on:
-      - build-test
+      - test
 
   # Deploy to Kubernetes
   deploy:
@@ -134,9 +94,9 @@ steps:
     commands:
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
       - IMAGE="ghcr.io/${GHCR_REPO}:main-${CI_COMMIT_SHA:0:7}"
-      - 'echo "Deploying development build: $IMAGE"'
+      - echo "Deploying development build: $IMAGE"
       - kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=$IMAGE -n ${K8S_NAMESPACE}
-      - 'kubectl annotate deployment/${DEPLOYMENT_NAME} kubernetes.io/change-cause="Deploy dev build ${CI_COMMIT_SHA:0:7} ($(date +%Y-%m-%d\ %H:%M:%S))" -n ${K8S_NAMESPACE} --overwrite'
+      - kubectl annotate deployment/${DEPLOYMENT_NAME} kubernetes.io/change-cause="Deploy dev build ${CI_COMMIT_SHA:0:7} ($(date +%Y-%m-%d\ %H:%M:%S))" -n ${K8S_NAMESPACE} --overwrite
       - kubectl rollout status deployment/${DEPLOYMENT_NAME} -n ${K8S_NAMESPACE} --timeout=10m
       - kubectl get pods -n ${K8S_NAMESPACE} -l app=portfolio-nextjs -o wide
     depends_on:
