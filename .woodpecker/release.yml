@@ -103,7 +103,7 @@ steps:
     commands:
       - pnpm build
 
-  # Build and Push Docker Image
+  # Build and Push to Dockerhub
   build-and-push-dockerhub:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
@@ -128,6 +128,7 @@ steps:
     depends_on:
       - build-test
 
+  # Build and Push to GHCR
   build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
