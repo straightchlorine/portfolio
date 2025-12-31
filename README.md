@@ -2,6 +2,8 @@
 
 Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-ready infrastructure.
 
+<needs a rewrite>
+
 **Author:** [Piotr Krzysztof Lis](https://github.com/straightchlorine)
 
 ---
