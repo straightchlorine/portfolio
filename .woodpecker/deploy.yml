@@ -45,7 +45,7 @@ steps:
         - main-${CI_COMMIT_SHA:0:7}
         - dev
       build_args:
-        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
     depends_on:
       - deploy-test
 
@@ -69,7 +69,7 @@ steps:
         - main-${CI_COMMIT_SHA:0:7}
         - dev
       build_args:
-        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
     depends_on:
       - deploy-test
 

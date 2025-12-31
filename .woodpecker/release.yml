@@ -67,7 +67,7 @@ steps:
         - "${CI_COMMIT_TAG}"
         - latest
       build_args:
-        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
     depends_on:
       - release-test
 
@@ -91,7 +91,7 @@ steps:
         - "${CI_COMMIT_TAG}"
         - latest
       build_args:
-        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
     depends_on:
       - release-test
 
