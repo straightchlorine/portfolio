@@ -214,17 +214,3 @@ Images tagged with:
 - `sha-abc123` (git commit)
 
 ---
-
-## Environment Variables
-
-**Local:**
-```bash
-# K8s metrics use mock data by default
-```
-
-**Production (K8s Secrets):**
-```bash
-DATABASE_URL="postgresql://user:password@postgres:5432/portfolio"
-REDIS_HOST="redis"
-REDIS_PORT="6379"
-```
