@@ -1,5 +1,5 @@
 # CI Pipeline - Tests and Checks on Pull Requests
-# Runs on pull requests to master branch
+# Based on official Woodpecker examples (woodpecker-ci/woodpecker, LemmyNet/lemmy-js-client)
 
 steps:
   ci-test:
@@ -8,12 +8,14 @@ steps:
       event: pull_request
       branch: master
     environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
       SKIP_ENV_VALIDATION: "true"
     commands:
-      - npm install -g pnpm@10
+      # Use corepack to enable pnpm (official Woodpecker approach)
+      - npm install -f -g corepack@latest
+      - corepack enable pnpm
+      # Install dependencies
       - pnpm install --frozen-lockfile
+      # Run checks
       - pnpm lint
       - pnpm tsc --noEmit
       - pnpm build
