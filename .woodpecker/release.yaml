@@ -99,7 +99,7 @@ steps:
     commands:
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
       - IMAGE="ghcr.io/${GHCR_REPO}:${CI_COMMIT_TAG}"
-      - echo "Deploying release: $IMAGE"
+      - printf "Deploying release %s\n" "$IMAGE"
       - kubectl set image deployment/portfolio-nextjs nextjs=$IMAGE -n portfolio
       - kubectl annotate deployment/portfolio-nextjs kubernetes.io/change-cause="Deploy version ${CI_COMMIT_TAG} ($(date '+%Y-%m-%d %H:%M:%S'))" -n portfolio --overwrite
       - kubectl rollout status deployment/portfolio-nextjs -n portfolio --timeout=10m
