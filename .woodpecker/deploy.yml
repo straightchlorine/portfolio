@@ -61,8 +61,6 @@ steps:
         - dev
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
-    depends_on:
-      - deploy-test
 
   deploy-build-and-push-ghcr:
     image: woodpeckerci/plugin-docker-buildx:latest

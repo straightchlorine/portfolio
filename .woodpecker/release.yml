@@ -1,6 +1,5 @@
 # Release Pipeline - Build, Push, and Deploy on version tags
 # Triggered on semantic version tags (v1.2.3, v2.0.0, etc.)
-# Uses custom clone step to avoid wasteful clones on other events
 
 variables:
   K8S_NAMESPACE: portfolio
@@ -10,7 +9,6 @@ variables:
 skip_clone: true
 
 steps:
-  # Custom clone step - only runs on version tags
   clone:
     image: woodpeckerci/plugin-git:latest
     when:
@@ -60,7 +58,7 @@ steps:
       - validate-version
 
   # Build and Push to Dockerhub
-  build-and-push-dockerhub:
+  release-build-and-push-dockerhub:
     image: woodpeckerci/plugin-docker-buildx:latest
     when:
       event: tag
