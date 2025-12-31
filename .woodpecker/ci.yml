@@ -1,8 +1,19 @@
 # CI Pipeline - Tests and Checks
 # Based on official Woodpecker examples (woodpecker-ci/woodpecker, LemmyNet/lemmy-js-client)
 # Avoids duplicate testing: tests on PR creation OR direct push to master, not both
+# Custom clone step prevents wasteful clones on feature branch pushes
+
+skip_clone: true  # Disable automatic clone, we define a custom one with conditions
 
 steps:
+  # Custom clone step - only runs when we'll actually execute tests
+  clone:
+    image: woodpeckerci/plugin-git:latest
+    when:
+      - event: pull_request
+      - event: push
+        branch: master
+
   ci-test:
     image: node:20-alpine
     when:
@@ -11,6 +22,8 @@ steps:
       # Also test direct pushes to master (but not feature branch pushes)
       - event: push
         branch: master
+    depends_on:
+      - clone
     environment:
       SKIP_ENV_VALIDATION: "true"
     commands:
