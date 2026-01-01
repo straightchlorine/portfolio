@@ -18,10 +18,10 @@ steps:
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
       - IMAGE="straightchlorine/portfolio:prod-${CI_COMMIT_SHA:0:7}"
       - printf "Deploying production build %s\n" "$IMAGE"
-      - kubectl set image deployment/portfolio nextjs=$IMAGE -n portfolio
-      - kubectl annotate deployment/portfolio kubernetes.io/change-cause="Deploy prod build ${CI_COMMIT_SHA:0:7} ($(date '+%Y-%m-%d %H:%M:%S'))" -n portfolio --overwrite
-      - kubectl rollout status deployment/portfolio -n portfolio --timeout=10m
-      - kubectl get pods -n portfolio -l app=portfolio -o wide
+      - kubectl set image deployment/portfolio-nextjs nextjs=$IMAGE -n portfolio
+      - kubectl annotate deployment/portfolio-nextjs kubernetes.io/change-cause="Deploy prod build ${CI_COMMIT_SHA:0:7} ($(date '+%Y-%m-%d %H:%M:%S'))" -n portfolio --overwrite
+      - kubectl rollout status deployment/portfolio-nextjs -n portfolio --timeout=10m
+      - kubectl get pods -n portfolio -l app=portfolio-nextjs -o wide
 
 depends_on:
   - build
