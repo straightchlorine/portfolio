@@ -82,12 +82,10 @@ steps:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:
         from_secret: kubeconfig_content
-      GHCR_REPO:
-        from_secret: ghcr_repo
     commands:
       - apk add --no-cache kubectl coreutils
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
-      - IMAGE="ghcr.io/${GHCR_REPO}:${CI_COMMIT_TAG}"
+      - IMAGE="straightchlorine/portfolio:${CI_COMMIT_TAG}"
       - printf "Deploying release %s\n" "$IMAGE"
       - kubectl set image deployment/portfolio nextjs=$IMAGE -n portfolio
       - kubectl annotate deployment/portfolio kubernetes.io/change-cause="Release ${CI_COMMIT_TAG} ($(date '+%Y-%m-%d %H:%M:%S'))" -n portfolio --overwrite
