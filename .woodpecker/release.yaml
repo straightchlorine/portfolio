@@ -79,13 +79,12 @@ steps:
     image: alpine:latest
     depends_on:
       - release-build-ghcr
-    secrets:
-      - kubeconfig_content
-      - ghcr_repo
     environment:
       KUBECONFIG: /tmp/kubeconfig
-      KUBECONFIG_CONTENT: $KUBECONFIG_CONTENT
-      GHCR_REPO: $GHCR_REPO
+      KUBECONFIG_CONTENT:
+        from_secret: kubeconfig_content
+      GHCR_REPO:
+        from_secret: ghcr_repo
     commands:
       - apk add --no-cache kubectl coreutils
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig

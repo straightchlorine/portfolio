@@ -7,15 +7,28 @@ when:
   branch: master
 
 steps:
+  - name: test-secrets
+    image: alpine:latest
+    environment:
+      KUBECONFIG_CONTENT:
+        from_secret: kubeconfig_content
+      GHCR_REPO:
+        from_secret: ghcr_repo
+    commands:
+      - echo "KUBECONFIG_CONTENT length:" ${#KUBECONFIG_CONTENT}
+      - echo "GHCR_REPO value:" "${GHCR_REPO}"
+      - echo "CI vars work - SHA:" ${CI_COMMIT_SHA:0:7}
+
   - name: deploy-k8s
     image: alpine:latest
-    secrets:
-      - kubeconfig_content
-      - ghcr_repo
+    depends_on:
+      - test-secrets
     environment:
       KUBECONFIG: /tmp/kubeconfig
-      KUBECONFIG_CONTENT: $KUBECONFIG_CONTENT
-      GHCR_REPO: $GHCR_REPO
+      KUBECONFIG_CONTENT:
+        from_secret: kubeconfig_content
+      GHCR_REPO:
+        from_secret: ghcr_repo
     commands:
       - apk add --no-cache kubectl coreutils
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
