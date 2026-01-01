@@ -284,6 +284,14 @@ export default function Home() {
               </div>
               <div className="flex gap-6">
                 <Link
+                  href="https://codeberg.org/piotrkrzysztof"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Codeberg
+                </Link>
+                <Link
                   href="https://github.com/straightchlorine"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -318,7 +326,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-4 text-center text-xs text-gray-600 font-mono">
-              Infrastructure: K3s on Hetzner · CI/CD: GitHub Actions · Cost: €6/mo
+              Infrastructure: K3s on Hetzner · CI/CD: Woodpecker CI · Cost: €3.5/mo
             </div>
           </div>
         </footer>
