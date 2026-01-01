@@ -25,11 +25,10 @@ steps:
     depends_on:
       - validate-version
     environment:
-      PNPM_HOME: /root/.pnpm
-      PATH: ${PNPM_HOME}:$PATH
       SKIP_ENV_VALIDATION: "true"
     commands:
-      - npm install -g pnpm@10
+      - npm install -f -g corepack@latest
+      - corepack enable pnpm
       - pnpm install --frozen-lockfile
       - pnpm lint
       - pnpm tsc --noEmit
