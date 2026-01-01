@@ -9,7 +9,6 @@ Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-r
 ### Planned
 
 - Blog (MDX-powered)
-- Contact form
 - Multi-language support (EN/PL)
 
 ---
