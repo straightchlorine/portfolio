@@ -38,26 +38,10 @@ steps:
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
 
-  - name: debug-ghcr-secrets
-    image: alpine:latest
-    depends_on:
-      - build-test
-    environment:
-      GHCR_REPO:
-        from_secret: ghcr_repo
-      GHCR_USERNAME:
-        from_secret: ghcr_username
-      GHCR_TOKEN:
-        from_secret: ghcr_token
-    commands:
-      - echo "GHCR_REPO=$GHCR_REPO"
-      - echo "GHCR_USERNAME=$GHCR_USERNAME"
-      - echo "GHCR_TOKEN length=${#GHCR_TOKEN}"
-
   - name: build-ghcr
     image: woodpeckerci/plugin-docker-buildx:latest
     depends_on:
-      - debug-ghcr-secrets
+      - build-test
     settings:
       repo:
         from_secret: ghcr_repo
