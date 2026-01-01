@@ -103,10 +103,9 @@ export default function TechStack() {
                 href={`/tech-stack/${role.id}`}
                 onMouseEnter={() => setHoveredRole(role.id)}
                 onMouseLeave={() => setHoveredRole(null)}
-                className="group relative bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-gray-700 transition-all duration-500"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
+                className={`group relative bg-gray-900 border border-gray-800 rounded-3xl p-8 hover:border-gray-700 transition-all duration-500 ${
+                  index === 0 ? '' : index === 1 ? 'animation-delay-100' : 'animation-delay-200'
+                }`}
               >
                 {/* Animated Gradient Background */}
                 <div

@@ -184,19 +184,19 @@ export default function Home() {
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-gray-800">
-                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+                  <div className="group/stat opacity-0 animate-fade-in-up animation-delay-500">
                     <div className="text-2xl font-bold text-blue-400 transition-all duration-300 group-hover/stat:scale-110">50K+</div>
                     <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">Monthly Experiments</div>
                   </div>
-                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+                  <div className="group/stat opacity-0 animate-fade-in-up animation-delay-600">
                     <div className="text-2xl font-bold text-purple-400 transition-all duration-300 group-hover/stat:scale-110">9</div>
                     <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">ML Feature Tables</div>
                   </div>
-                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+                  <div className="group/stat opacity-0 animate-fade-in-up animation-delay-700">
                     <div className="text-2xl font-bold text-orange-400 transition-all duration-300 group-hover/stat:scale-110">15</div>
                     <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">Microservices</div>
                   </div>
-                  <div className="group/stat opacity-0 animate-fade-in-up" style={{ animationDelay: '800ms' }}>
+                  <div className="group/stat opacity-0 animate-fade-in-up animation-delay-800">
                     <div className="text-2xl font-bold text-green-400 transition-all duration-300 group-hover/stat:scale-110">2-5x</div>
                     <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">GPU Performance</div>
                   </div>

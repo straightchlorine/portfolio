@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script"
 import { Geist, Geist_Mono } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,13 +39,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Get the nonce from middleware
+  const headersList = await headers();
+  const nonce = headersList.get('x-nonce') || '';
+
   return (
     <html lang="en">
+      <head>
+        {/* Add nonce meta tag for Next.js to use in injected styles */}
+        {nonce && <meta property="csp-nonce" content={nonce} />}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -53,6 +62,7 @@ export default function RootLayout({
           src="https://app.rybbit.io/api/script.js"
           data-site-id="3b2c616b4e25"
           strategy="afterInteractive"
+          nonce={nonce}
         />
       </body>
     </html>

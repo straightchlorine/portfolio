@@ -25,7 +25,7 @@ export default function ExperiencePage() {
         <main className="px-6 py-16">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
-            <div className="mb-16 opacity-0 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+            <div className="mb-16 opacity-0 animate-fade-in-up animation-delay-100">
               <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
                 Professional Experience
               </h1>
@@ -36,14 +36,14 @@ export default function ExperiencePage() {
 
             {/* Experience Timeline */}
             <section className="mb-20">
-              <div className="flex items-center gap-3 mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+              <div className="flex items-center gap-3 mb-8 opacity-0 animate-fade-in-up animation-delay-200">
                 <Briefcase className="w-6 h-6 text-purple-400" />
                 <h2 className="text-2xl font-bold text-white font-mono">Work Experience</h2>
               </div>
 
               <div className="space-y-8">
                 {/* Kalasar */}
-                <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                <div className="opacity-0 animate-fade-in-up animation-delay-300">
                   <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 hover:border-purple-500/50 transition-all">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                       <div>
@@ -123,7 +123,7 @@ export default function ExperiencePage() {
                 </div>
 
                 {/* Flightbox */}
-                <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+                <div className="opacity-0 animate-fade-in-up animation-delay-400">
                   <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 hover:border-blue-500/50 transition-all">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                       <div>
@@ -179,7 +179,7 @@ export default function ExperiencePage() {
                 </div>
 
                 {/* Codex */}
-                <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+                <div className="opacity-0 animate-fade-in-up animation-delay-500">
                   <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 hover:border-green-500/50 transition-all">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                       <div>
@@ -244,14 +244,14 @@ export default function ExperiencePage() {
 
             {/* Education */}
             <section>
-              <div className="flex items-center gap-3 mb-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+              <div className="flex items-center gap-3 mb-8 opacity-0 animate-fade-in-up animation-delay-600">
                 <GraduationCap className="w-6 h-6 text-blue-400" />
                 <h2 className="text-2xl font-bold text-white font-mono">Education & Certifications</h2>
               </div>
 
               <div className="space-y-6">
                 {/* University */}
-                <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+                <div className="opacity-0 animate-fade-in-up animation-delay-700">
                   <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-500/50 transition-all">
                     <div className="flex items-start justify-between mb-3">
                       <div>
@@ -272,7 +272,7 @@ export default function ExperiencePage() {
                 </div>
 
                 {/* High School */}
-                <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '750ms' }}>
+                <div className="opacity-0 animate-fade-in-up animation-delay-750">
                   <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-500/50 transition-all">
                     <div className="flex items-start justify-between mb-3">
                       <div>
@@ -293,7 +293,7 @@ export default function ExperiencePage() {
                 </div>
 
                 {/* Scholarships & Awards */}
-                <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '800ms' }}>
+                <div className="opacity-0 animate-fade-in-up animation-delay-800">
                   <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
                     <div className="flex items-center gap-2 mb-4">
                       <Award className="w-5 h-5 text-yellow-400" />
@@ -317,7 +317,7 @@ export default function ExperiencePage() {
                 </div>
 
                 {/* Certifications */}
-                <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: '850ms' }}>
+                <div className="opacity-0 animate-fade-in-up animation-delay-850">
                   <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
                     <h3 className="text-lg font-bold text-white mb-4">Professional Certifications</h3>
                     <ul className="space-y-3 text-gray-300">
