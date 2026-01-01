@@ -1,6 +1,6 @@
 # Portfolio
 
-Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-ready infrastructure.
+Portfolio with live Kubernetes metrics, automated CI/CD, and production-ready infrastructure.
 
 ---
 
