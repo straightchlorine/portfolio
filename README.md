@@ -88,7 +88,6 @@ pnpm lint         # ESLint
 **Phase 3: CV System** (Q1 2025)
 - [ ] Dynamic CV generation
 - [ ] Multiple versions (Full-Stack, AI/ML, Platform/DevOps)
-- [ ] PDF export
 - [ ] Integration with curriculum-vitae repo
 
 **Phase 4: Engagement** (Q2 2025)
