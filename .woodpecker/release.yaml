@@ -54,30 +54,10 @@ steps:
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
 
-  - name: release-build-ghcr
-    image: woodpeckerci/plugin-docker-buildx:latest
-    depends_on:
-      - release-test
-    settings:
-      repo:
-        from_secret: ghcr_repo
-      registry: ghcr.io
-      dockerfile: Dockerfile
-      platforms: linux/amd64
-      username:
-        from_secret: ghcr_username
-      password:
-        from_secret: ghcr_token
-      tags:
-        - "${CI_COMMIT_TAG}"
-        - latest
-      build_args:
-        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
-
   - name: release-deploy-k8s
     image: alpine:latest
     depends_on:
-      - release-build-ghcr
+      - release-build-dockerhub
     environment:
       KUBECONFIG: /tmp/kubeconfig
       KUBECONFIG_CONTENT:

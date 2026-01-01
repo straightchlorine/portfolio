@@ -36,22 +36,3 @@ steps:
         - prod-${CI_COMMIT_SHA:0:7}
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
-
-  - name: build-ghcr
-    image: woodpeckerci/plugin-docker-buildx:latest
-    depends_on:
-      - build-test
-    settings:
-      repo:
-        from_secret: ghcr_repo
-      registry: ghcr.io
-      dockerfile: Dockerfile
-      platforms: linux/amd64
-      username:
-        from_secret: ghcr_username
-      password:
-        from_secret: ghcr_token
-      tags:
-        - prod-${CI_COMMIT_SHA:0:7}
-      build_args:
-        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
