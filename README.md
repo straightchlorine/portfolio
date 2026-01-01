@@ -75,7 +75,6 @@ pnpm lint         # ESLint
 **Phase 4: Engagement** (Q2 2025)
 - [ ] Contact form
 - [ ] Case studies
-- [ ] Analytics
 
 **Phase 5: Polish** (Q2 2025)
 - [ ] Multi-language (EN/PL)
