@@ -97,7 +97,6 @@ pnpm lint         # ESLint
 - [ ] Analytics
 
 **Phase 5: Polish** (Q2 2025)
-- [ ] Theme toggle
 - [ ] Multi-language (EN/PL)
 - [ ] Advanced animations
 
