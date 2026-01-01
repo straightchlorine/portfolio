@@ -77,4 +77,3 @@ pnpm lint         # ESLint
 
 **Phase 5: Polish** (Q2 2025)
 - [ ] Multi-language (EN/PL)
-- [ ] Advanced animations
