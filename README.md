@@ -50,21 +50,6 @@ See [docs/INFRASTRUCTURE.md](./docs/INFRASTRUCTURE.md) for details.
 
 ---
 
-## Tech Stack
-
-**Frontend:**
-- Next.js 15 (App Router, Server Components)
-- React 19
-- TypeScript
-- Tailwind CSS 4
-
-**Infrastructure:**
-- Kubernetes (K3s)
-- PostgreSQL 16
-- Redis 7
-- Traefik + cert-manager
-
----
 
 ## Scripts
 
