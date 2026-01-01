@@ -103,21 +103,7 @@ pnpm lint         # ESLint
 
 ---
 
-## Documentation
-
-- [Setup Guide](./docs/SETUP.md)
-- [Infrastructure](./docs/INFRASTRUCTURE.md)
-- [Strategy](./docs/STRATEGY.md)
-- [K8s Metrics](./docs/k8s-metrics.md)
-
----
-
 ## Deployment
-
-### Environments
-
-- **Development**: Auto-deploy on push to `main`
-- **Production**: Auto-deploy on version tags
 
 ### Creating a Release
 
