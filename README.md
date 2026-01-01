@@ -81,8 +81,6 @@ pnpm lint         # ESLint
 
 **Phase 2: Content** (Q1 2025)
 - [ ] MDX blog with syntax highlighting
-- [ ] RSS feed
-- [ ] Post categories/tags
 
 **Phase 3: CV System** (Q1 2025)
 - [ ] Dynamic CV generation
