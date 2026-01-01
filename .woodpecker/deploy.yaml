@@ -18,10 +18,10 @@ steps:
     commands:
       - apk add --no-cache kubectl coreutils
       - echo "${KUBECONFIG_CONTENT}" | base64 -d > /tmp/kubeconfig
-      - IMAGE="ghcr.io/${GHCR_REPO}:main-${CI_COMMIT_SHA:0:7}"
-      - printf "Deploying development build %s\n" "$IMAGE"
+      - IMAGE="ghcr.io/${GHCR_REPO}:prod-${CI_COMMIT_SHA:0:7}"
+      - printf "Deploying production build %s\n" "$IMAGE"
       - kubectl set image deployment/portfolio nextjs=$IMAGE -n portfolio
-      - kubectl annotate deployment/portfolio kubernetes.io/change-cause="Deploy dev build ${CI_COMMIT_SHA:0:7} ($(date '+%Y-%m-%d %H:%M:%S'))" -n portfolio --overwrite
+      - kubectl annotate deployment/portfolio kubernetes.io/change-cause="Deploy prod build ${CI_COMMIT_SHA:0:7} ($(date '+%Y-%m-%d %H:%M:%S'))" -n portfolio --overwrite
       - kubectl rollout status deployment/portfolio -n portfolio --timeout=10m
       - kubectl get pods -n portfolio -l app=portfolio -o wide
 

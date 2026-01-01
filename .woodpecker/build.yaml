@@ -33,8 +33,7 @@ steps:
       password:
         from_secret: dockerhub_token
       tags:
-        - main-${CI_COMMIT_SHA:0:7}
-        - dev
+        - prod-${CI_COMMIT_SHA:0:7}
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
 
@@ -53,7 +52,6 @@ steps:
       password:
         from_secret: ghcr_token
       tags:
-        - main-${CI_COMMIT_SHA:0:7}
-        - dev
+        - prod-${CI_COMMIT_SHA:0:7}
       build_args:
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
