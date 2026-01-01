@@ -17,7 +17,6 @@ Modern portfolio with live Kubernetes metrics, automated CI/CD, and production-r
 
 **Stack:**
 - K3s on Hetzner Cloud
-- Traefik ingress with cert-manager
 - GHCR + Docker Hub registries
 
 ---
