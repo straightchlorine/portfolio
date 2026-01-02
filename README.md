@@ -2,6 +2,8 @@
 
 Personal portfolio and engineering showcase. Next.js application with live Kubernetes metrics, automated CI/CD, and production deployment.
 
+**Repository:** [Codeberg](https://codeberg.org/piotrkrzysztof/portfolio) (primary) · [GitHub](https://github.com/straightchlorine/portfolio) (mirror)
+
 ## Quick Start
 
 ```bash
