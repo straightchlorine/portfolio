@@ -118,17 +118,7 @@ steps:
         else
           COMMITS=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --reverse)
         fi
-        RELEASE_DATA=$(cat <<EOFDATA
-{
-  "tag_name": "$VERSION",
-  "target_commitish": "$CI_COMMIT_SHA",
-  "name": "Release $VERSION",
-  "body": "$COMMITS",
-  "draft": false,
-  "prerelease": false
-}
-EOFDATA
-)
+        RELEASE_DATA='{"tag_name":"'$VERSION'","target_commitish":"'$CI_COMMIT_SHA'","name":"Release '$VERSION'","body":"'$COMMITS'","draft":false,"prerelease":false}'
         curl -X POST \
           -H "Authorization: token ${CODEBERG_TOKEN}" \
           -H "Content-Type: application/json" \
