@@ -1,77 +1,86 @@
 # Portfolio
 
-Portfolio with live Kubernetes metrics, automated CI/CD, and production-ready infrastructure.
-
----
-
-## Features
-
-### Planned
-
-- Blog (MDX-powered)
-- Multi-language support (EN/PL)
-
----
-
-## Architecture
-
-**Stack:**
-- K3s on Hetzner Cloud
-- GHCR + Docker Hub registries
-
----
+Personal portfolio and engineering showcase. Next.js application with live Kubernetes metrics, automated CI/CD, and production deployment.
 
 ## Quick Start
-
-### Local Development
 
 ```bash
 pnpm install
 pnpm dev
-# Open http://localhost:3000
+# http://localhost:3000
 ```
 
-Note: K8s metrics will fall back to mock data locally.
-
-### Production Deployment
-
+**Local database:**
 ```bash
-# Development
-git push origin main
+docker-compose up -d  # PostgreSQL + Redis
+```
 
-# Production
+## Stack
+
+- **Framework:** Next.js 16, React 19, TypeScript
+- **Styling:** Tailwind CSS v4, Lucide React icons
+- **Deployment:** Docker, Kubernetes, Traefik
+- **CI/CD:** Woodpecker (self-hosted)
+- **Database:** PostgreSQL, Redis
+- **Infrastructure:** K3s on Hetzner Cloud
+
+## Features
+
+- **Home:** Featured project + projects grid + live K8s metrics
+- **Tech Stack:** Role-specific skills selector (AI/ML, Full-Stack, Platform/DevOps)
+- **Experience:** Work history (placeholder)
+- **Security:** CSP with nonce, security headers, HTTPS enforcement
+- **Metrics:** Real K8s pod status in production, mock fallback in dev
+
+## Development
+
+**Scripts:**
+```bash
+pnpm dev              # Dev server (Turbopack)
+pnpm build            # Production build
+pnpm lint             # ESLint
+pnpm tsc --noEmit     # Type check
+```
+
+**Key Files:**
+- `app/page.tsx` - Home page (hardcoded projects)
+- `app/tech-stack/[role]/page.tsx` - CV by role
+- `app/api/metrics/route.ts` - Kubernetes metrics endpoint
+- `proxy.ts` - CSP & security headers (middleware)
+- `.woodpecker/` - CI/CD pipelines
+
+**Projects are hardcoded** in JSX. To modify: edit `app/page.tsx` directly.
+
+## Deployment
+
+### Local Production Build
+```bash
+pnpm build
+pnpm start
+```
+
+### Kubernetes Deployment
+```bash
+# Automatic via Woodpecker on git tag
 git tag v1.0.0
 git push origin v1.0.0
+
+# Manual deployment
+kubectl set image deployment/portfolio-nextjs nextjs=straightchlorine/portfolio:TAG -n portfolio
 ```
 
-See [docs/INFRASTRUCTURE.md](./docs/INFRASTRUCTURE.md) for details.
+**Docker image:** `straightchlorine/portfolio:HASH`
 
----
+## Environment Variables
 
-
-## Scripts
-
-```bash
-pnpm dev          # Development server (Turbopack)
-pnpm build        # Production build
-pnpm start        # Production server
-pnpm lint         # ESLint
-```
-
----
+See `.env.example`:
+- `DATABASE_URL` - PostgreSQL connection
+- `REDIS_URL` - Redis connection
+- `NEXT_PUBLIC_APP_URL` - Public app URL
 
 ## Roadmap
 
-**Phase 2: Content** (Q1 2025)
-- [ ] MDX blog with syntax highlighting
-
-**Phase 3: CV System** (Q1 2025)
-- [ ] Dynamic CV generation
-- [ ] Multiple versions (Full-Stack, AI/ML, Platform/DevOps)
-- [ ] Integration with curriculum-vitae repo
-
-**Phase 4: Engagement** (Q2 2025)
-- [ ] Contact form
-
-**Phase 5: Polish** (Q2 2025)
-- [ ] Multi-language (EN/PL)
+- Blog (MDX)
+- Dynamic projects
+- CV integration
+- Multi-language support (EN/PL)
