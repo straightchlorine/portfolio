@@ -1,25 +1,26 @@
 'use client';
 
-import React from 'react';
-
 interface BadgeProps {
   src: string;
   alt: string;
   title?: string;
-  height?: number; // Natural height in pixels (e.g., 20)
+  size?: 'sm' | 'md' | 'lg';
 }
+
+const sizeMap = {
+  sm: 'max-h-4',   // 16px
+  md: 'max-h-5',   // 20px
+  lg: 'max-h-6',   // 24px
+};
 
 /**
  * Badge component for displaying external service badges (shields.io, pepy.tech, etc.)
- * Maintains correct aspect ratio and supports high-DPI displays
+ * Maintains correct aspect ratio with predefined size variants
  *
- * Key fixes:
  * - Uses height: auto and width: auto to prevent aspect ratio distortion
- * - maxHeight constrains size while maintaining proportions
- * - No hardcoded width attributes that cause stretching
+ * - Predefined size variants ensure consistent badge sizing
  */
-export function Badge({ src, alt, title, height = 20 }: BadgeProps) {
-  // Pre-compute title to avoid hydration mismatch
+export function Badge({ src, alt, title, size = 'md' }: BadgeProps) {
   const badgeTitle = title ?? alt;
 
   return (
@@ -27,13 +28,7 @@ export function Badge({ src, alt, title, height = 20 }: BadgeProps) {
       src={src}
       alt={alt}
       title={badgeTitle}
-      style={{
-        height: 'auto',
-        maxHeight: `${height}px`,
-        width: 'auto',
-        display: 'inline-block',
-      }}
-      className="transition-all duration-300 hover:scale-110 hover:brightness-110"
+      className={`h-auto w-auto inline-block transition-all duration-300 hover:scale-110 hover:brightness-110 ${sizeMap[size]}`}
       loading="lazy"
       decoding="async"
       suppressHydrationWarning
