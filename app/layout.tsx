@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script"
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
@@ -21,17 +21,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portfolio.codextechnologies.org"),
   title: "Piotr Krzysztof Lis | Full-Stack Engineer",
   description: "Full-Stack Engineer building AI systems and production infrastructure.",
   keywords: ["Full-Stack Engineer", "DevOps", "Platform Engineering", "Kubernetes", "Cloud Native", "RAG Systems", "Machine Learning", "Quantum Computing", "AI Systems"],
   authors: [{ name: "Piotr Krzysztof Lis" }],
   creator: "Piotr Krzysztof Lis",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -43,6 +38,13 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default async function RootLayout({
