@@ -77,10 +77,13 @@ steps:
     image: alpine:latest
     depends_on:
       - release-deploy-k8s
+    environment:
+      APP_URL:
+        from_secret: app_url
     commands:
       - apk add --no-cache curl
       - |
-        ENDPOINT="https://portfolio.codextechnologies.org"
+        ENDPOINT="${APP_URL}"
         HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $ENDPOINT)
         if [ $HTTP_CODE -eq 200 ]; then
           echo "Homepage check passed (HTTP $HTTP_CODE)"
@@ -116,16 +119,16 @@ steps:
           COMMITS=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --reverse)
         fi
         RELEASE_DATA=$(cat <<EOFDATA
-        {
-          "tag_name": "$VERSION",
-          "target_commitish": "$CI_COMMIT_SHA",
-          "name": "Release $VERSION",
-          "body": "$COMMITS",
-          "draft": false,
-          "prerelease": false
-        }
-        EOFDATA
-        )
+{
+  "tag_name": "$VERSION",
+  "target_commitish": "$CI_COMMIT_SHA",
+  "name": "Release $VERSION",
+  "body": "$COMMITS",
+  "draft": false,
+  "prerelease": false
+}
+EOFDATA
+)
         curl -X POST \
           -H "Authorization: token ${CODEBERG_TOKEN}" \
           -H "Content-Type: application/json" \
