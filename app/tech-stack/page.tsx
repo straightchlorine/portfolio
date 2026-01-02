@@ -146,7 +146,7 @@ export default function TechStack() {
                           {skill}
                         </span>
                       ))}
-                      <span className="px-3 py-1 bg-gray-800/50 text-gray-500 rounded-lg text-xs font-mono">
+                      <span className="px-3 py-1 bg-gray-800/50 text-gray-400 rounded-lg text-xs font-mono">
                         +{role.keySkills.length - 3} more
                       </span>
                     </div>
@@ -156,7 +156,7 @@ export default function TechStack() {
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     {role.stats.map((stat, idx) => (
                       <div key={idx}>
-                        <div className="text-xs text-gray-500 font-mono mb-1">
+                        <div className="text-xs text-gray-400 font-mono mb-1">
                           {stat.label}
                         </div>
                         <div className="text-sm font-bold text-white font-mono">
@@ -194,25 +194,25 @@ export default function TechStack() {
             <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-mono">
               3
             </div>
-            <div className="text-xs text-gray-500 mt-1">Specializations</div>
+            <div className="text-xs text-gray-400 mt-1">Specializations</div>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
             <div className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent font-mono">
               50+
             </div>
-            <div className="text-xs text-gray-500 mt-1">Technologies</div>
+            <div className="text-xs text-gray-400 mt-1">Technologies</div>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
             <div className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent font-mono">
               5+
             </div>
-            <div className="text-xs text-gray-500 mt-1">Years Experience</div>
+            <div className="text-xs text-gray-400 mt-1">Years Experience</div>
           </div>
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
             <div className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent font-mono">
               1.4K+
             </div>
-            <div className="text-xs text-gray-500 mt-1">Docker Pulls</div>
+            <div className="text-xs text-gray-400 mt-1">Docker Pulls</div>
           </div>
         </div>
       </div>

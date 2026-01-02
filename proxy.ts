@@ -9,14 +9,14 @@ export function proxy(request: NextRequest) {
     // Restrict everything to self unless explicitly allowed
     "default-src 'self'",
 
-    // Scripts: self + trusted analytics (Rybbit) + nonce + strict-dynamic
-    `script-src 'self' https://app.rybbit.io/api/script.js 'nonce-${nonce}' 'strict-dynamic'`,
+    // Scripts: self + trusted analytics (Rybbit) + Cloudflare email protection + nonce + strict-dynamic
+    `script-src 'self' https://app.rybbit.io/api/script.js https://challenges.cloudflare.com 'nonce-${nonce}' 'strict-dynamic'`,
 
-    // Styles: self + Google Fonts + nonce
-    `style-src 'self' https://fonts.googleapis.com 'nonce-${nonce}'`,
+    // Styles: self + nonce
+    `style-src 'self' 'nonce-${nonce}'`,
 
-    // Fonts: self + Google Fonts
-    "font-src 'self' https://fonts.gstatic.com",
+    // Fonts: self
+    "font-src 'self'",
 
     // Images: self + data URIs + https
     "img-src 'self' data: https:",
@@ -35,9 +35,6 @@ export function proxy(request: NextRequest) {
 
     // Manifests and other special resources
     "manifest-src 'self'",
-
-    // Prevent prefetching to external sites
-    "prefetch-src 'self'",
 
     // Missing directives for Mozilla Observatory compliance
     "base-uri 'self'",

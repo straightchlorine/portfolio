@@ -400,7 +400,7 @@ export default function RolePage() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-white transition-colors"
+                        className="text-gray-400 hover:text-white transition-colors"
                       >
                         <Github className="w-6 h-6" />
                       </a>
@@ -410,7 +410,7 @@ export default function RolePage() {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-white transition-colors"
+                        className="text-gray-400 hover:text-white transition-colors"
                       >
                         <ExternalLink className="w-6 h-6" />
                       </a>
@@ -433,7 +433,7 @@ export default function RolePage() {
 
                 {project.metrics && project.metrics.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-mono text-gray-500 mb-3 uppercase tracking-wide">
+                    <h4 className="text-sm font-mono text-gray-400 mb-3 uppercase tracking-wide">
                       Key Metrics
                     </h4>
                     <div className="grid sm:grid-cols-2 gap-3">

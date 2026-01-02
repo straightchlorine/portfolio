@@ -145,7 +145,7 @@ export function LiveMetrics() {
             CLUSTER: {metrics.status.toUpperCase()}
           </span>
         </div>
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-gray-400">
           {currentTime.toLocaleTimeString('en-US', {
             timeZone: 'UTC',
             hour12: false,
@@ -167,7 +167,7 @@ export function LiveMetrics() {
         {/* Services Cards */}
         {services && Object.keys(services).length > 0 && (
           <div className="py-1">
-            <div className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Services</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wider mb-1.5">Services</div>
             <div className="flex flex-wrap gap-2">
               {Object.entries(services).map(([name, counts]) => {
                 const isHealthy = counts.running === counts.total;

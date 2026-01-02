@@ -3,9 +3,20 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: 'standalone', // Required for Docker deployment
 
+  // Performance optimizations
+  compress: true,
+  poweredByHeader: false,
+
   // Optimize images
   images: {
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000, // 1 year cache for optimized images
+  },
+
+  // Experimental features
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['lucide-react'],
   },
 
   // Security headers (CSP is now in middleware.ts for nonce support)

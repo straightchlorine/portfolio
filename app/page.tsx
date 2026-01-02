@@ -1,7 +1,21 @@
+"use client";
+
 import Link from "next/link";
-import { Github, Linkedin, Mail, ExternalLink } from "lucide-react";
-import { LiveMetrics } from "@/components/LiveMetrics";
+import dynamic from "next/dynamic";
+import { Github, Linkedin, Mail, ExternalLink, Activity } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+
+const LiveMetrics = dynamic(() => import("@/components/LiveMetrics").then(mod => ({ default: mod.LiveMetrics })), {
+  ssr: false,
+  loading: () => (
+    <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+      <div className="flex items-center gap-2 text-gray-400">
+        <Activity className="w-5 h-5 animate-pulse" aria-hidden="true" />
+        <span className="font-mono text-sm">Loading cluster metrics...</span>
+      </div>
+    </div>
+  ),
+});
 
 export default function Home() {
 
@@ -45,7 +59,7 @@ export default function Home() {
 
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
                 Full-Stack Engineer<br />
-                <span className="text-gray-500">Building AI systems & production infrastructure</span>
+                <span className="text-gray-400">Building AI systems & production infrastructure</span>
               </h1>
 
               <div className="space-y-3 font-mono text-lg text-gray-300 max-w-3xl">
@@ -128,35 +142,55 @@ export default function Home() {
                       <img
                         src="https://badge.fury.io/py/quantum-pipeline.svg"
                         alt="PyPI version"
+                        width="90"
+                        height="20"
                         className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <span aria-hidden="true">•</span>
                       {/* PyPI Downloads Badge */}
                       <img
                         src="https://static.pepy.tech/badge/quantum-pipeline"
                         alt="Total Downloads"
+                        width="150"
+                        height="20"
                         className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <span aria-hidden="true">•</span>
                       {/* Docker Pulls Badge */}
                       <img
                         src="https://img.shields.io/docker/pulls/straightchlorine/quantum-pipeline.svg"
                         alt="Docker Pulls"
+                        width="110"
+                        height="20"
                         className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <span aria-hidden="true">•</span>
                       {/* Build Status Badge */}
                       <img
                         src="https://img.shields.io/github/actions/workflow/status/straightchlorine/quantum-pipeline/pypi-publish.yml.svg"
                         alt="Build Status"
+                        width="110"
+                        height="20"
                         className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <span aria-hidden="true">•</span>
                       {/* GitHub Stars Badge */}
                       <img
                         src="https://img.shields.io/github/stars/straightchlorine/quantum-pipeline.svg"
                         alt="GitHub Stars"
+                        width="100"
+                        height="20"
                         className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   </div>
@@ -186,19 +220,19 @@ export default function Home() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-gray-800">
                   <div className="group/stat opacity-0 animate-fade-in-up animation-delay-500">
                     <div className="text-2xl font-bold text-blue-400 transition-all duration-300 group-hover/stat:scale-110">50K+</div>
-                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">Monthly Experiments</div>
+                    <div className="text-xs text-gray-400 font-mono transition-colors group-hover/stat:text-gray-300">Monthly Experiments</div>
                   </div>
                   <div className="group/stat opacity-0 animate-fade-in-up animation-delay-600">
                     <div className="text-2xl font-bold text-purple-400 transition-all duration-300 group-hover/stat:scale-110">9</div>
-                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">ML Feature Tables</div>
+                    <div className="text-xs text-gray-400 font-mono transition-colors group-hover/stat:text-gray-300">ML Feature Tables</div>
                   </div>
                   <div className="group/stat opacity-0 animate-fade-in-up animation-delay-700">
                     <div className="text-2xl font-bold text-orange-400 transition-all duration-300 group-hover/stat:scale-110">15</div>
-                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">Microservices</div>
+                    <div className="text-xs text-gray-400 font-mono transition-colors group-hover/stat:text-gray-300">Microservices</div>
                   </div>
                   <div className="group/stat opacity-0 animate-fade-in-up animation-delay-800">
                     <div className="text-2xl font-bold text-green-400 transition-all duration-300 group-hover/stat:scale-110">2-5x</div>
-                    <div className="text-xs text-gray-500 font-mono transition-colors group-hover/stat:text-gray-400">GPU Performance</div>
+                    <div className="text-xs text-gray-400 font-mono transition-colors group-hover/stat:text-gray-300">GPU Performance</div>
                   </div>
                 </div>
               </Link>
@@ -276,7 +310,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="w-full px-6 py-8 border-t border-gray-800/50">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-sm text-gray-500">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-sm text-gray-400">
               <div className="flex items-center gap-4">
                 <span>Wrocław, Poland</span>
                 <span>•</span>
