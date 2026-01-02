@@ -11,7 +11,7 @@ steps:
     commands:
       - |
         VERSION=${CI_COMMIT_TAG}
-        VERSION_NO_V="${VERSION#v}"
+        VERSION_NO_V=$(echo "$VERSION" | sed 's/^v//')
         echo "Detected version: $VERSION"
         if ! echo "$VERSION_NO_V" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
           echo "Invalid version format: $VERSION_NO_V"
