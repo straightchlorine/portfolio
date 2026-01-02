@@ -6,11 +6,11 @@ import {
   Brain,
   Rocket,
   Layers,
-  Github,
   ExternalLink,
   ArrowLeft,
   Check,
 } from "lucide-react";
+import { FiGithub } from "react-icons/fi";
 import Link from "next/link";
 
 interface Project {
@@ -402,7 +402,7 @@ export default function RolePage() {
                         rel="noopener noreferrer"
                         className="text-gray-400 hover:text-white transition-colors"
                       >
-                        <Github className="w-6 h-6" />
+                        <FiGithub className="w-6 h-6" aria-hidden="true" />
                       </a>
                     )}
                     {project.link && (

@@ -3,7 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Github, Linkedin, Mail, ExternalLink, Activity } from "lucide-react";
+import { Mail, ExternalLink, Activity } from "lucide-react";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
+import { SiCodeberg, SiDocker, SiPypi } from "react-icons/si";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Badge } from "@/components/Badge";
 import { quantumPipelineBadges } from "@/lib/badges";
@@ -38,14 +40,6 @@ export default function Home() {
               >
                 /experience
               </Link>
-              <Link
-                href="https://github.com/straightchlorine"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                /github
-              </Link>
             </div>
           </div>
         </nav>
@@ -73,7 +67,7 @@ export default function Home() {
                   <span className="text-green-400">→</span> DSW University · 5.0/5.0 GPA · 5x scholarship recipient
                 </p>
                 <p>
-                  <span className="text-orange-400">→</span> 10 years coding experience · Certified IT Professional (EE.08, EE.09)
+                  <span className="text-orange-400">→</span> 10 years coding experience · Certified IT Professional
                 </p>
               </div>
 
@@ -85,7 +79,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-mono font-semibold rounded-lg hover:bg-gray-200 transition-all"
                   aria-label="Visit my GitHub profile"
                 >
-                  <Github className="w-5 h-5" aria-hidden="true" />
+                  <FiGithub className="w-5 h-5" aria-hidden="true" />
                   GitHub
                   <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 </Link>
@@ -96,7 +90,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white font-mono font-semibold rounded-lg border border-gray-700 hover:bg-gray-700 transition-all"
                   aria-label="Visit my LinkedIn profile"
                 >
-                  <Linkedin className="w-5 h-5" aria-hidden="true" />
+                  <FiLinkedin className="w-5 h-5" aria-hidden="true" />
                   LinkedIn
                   <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 </Link>
@@ -276,40 +270,45 @@ export default function Home() {
                   href="https://codeberg.org/piotrkrzysztof"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
                 >
+                  <SiCodeberg className="w-4 h-4" aria-hidden="true" />
                   Codeberg
                 </Link>
                 <Link
                   href="https://github.com/straightchlorine"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
                 >
+                  <FiGithub className="w-4 h-4" aria-hidden="true" />
                   GitHub
                 </Link>
                 <Link
                   href="https://www.linkedin.com/in/straightchlorine/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
                 >
+                  <FiLinkedin className="w-4 h-4" aria-hidden="true" />
                   LinkedIn
                 </Link>
                 <Link
                   href="https://hub.docker.com/u/straightchlorine"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
                 >
+                  <SiDocker className="w-4 h-4" aria-hidden="true" />
                   Docker Hub
                 </Link>
                 <Link
                   href="https://pypi.org/user/straightchlorine/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
                 >
+                  <SiPypi className="w-4 h-4" aria-hidden="true" />
                   PyPI
                 </Link>
               </div>
