@@ -259,7 +259,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="w-full px-6 py-8 border-t border-gray-800/50">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-sm text-gray-400">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-sm text-gray-300">
               <div className="flex items-center gap-4">
                 <span>Wrocław, Poland</span>
                 <span>•</span>
@@ -270,7 +270,7 @@ export default function Home() {
                   href="https://codeberg.org/piotrkrzysztof"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
                 >
                   <SiCodeberg className="w-4 h-4" aria-hidden="true" />
                   Codeberg
@@ -279,7 +279,7 @@ export default function Home() {
                   href="https://github.com/straightchlorine"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
                 >
                   <FiGithub className="w-4 h-4" aria-hidden="true" />
                   GitHub
@@ -288,7 +288,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/straightchlorine/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
                 >
                   <FiLinkedin className="w-4 h-4" aria-hidden="true" />
                   LinkedIn
@@ -297,7 +297,7 @@ export default function Home() {
                   href="https://hub.docker.com/u/straightchlorine"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
                 >
                   <SiDocker className="w-4 h-4" aria-hidden="true" />
                   Docker Hub
@@ -306,7 +306,7 @@ export default function Home() {
                   href="https://pypi.org/user/straightchlorine/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
                 >
                   <SiPypi className="w-4 h-4" aria-hidden="true" />
                   PyPI
