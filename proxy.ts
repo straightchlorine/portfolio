@@ -12,7 +12,7 @@ export function proxy(request: NextRequest) {
     // Scripts: self + trusted analytics (Rybbit) + Cloudflare email protection + nonce + specific script hashes
     // Note: strict-dynamic removed to allow Cloudflare's email-decode injection from same origin
     // Hashes allow specific inline scripts from Cloudflare while blocking malicious injections
-    `script-src 'self' https://app.rybbit.io/api/script.js https://challenges.cloudflare.com 'nonce-${nonce}' 'sha256-YCEy2GvWrLoojmZohrvCK0TG2ozdHMebHaZ6/ZIRiLQ=' 'sha256-v5CTjXJARtV8VaFCdUh3dY9bknaW0zK+mX/3zniLiJU=' 'sha256-5KCKd3uVQRKzXXKOdxwhebtqwTeNbzlfnu/kdQYplYY='`,
+    `script-src 'self' https://app.rybbit.io/api/script.js https://challenges.cloudflare.com 'nonce-${nonce}' 'sha256-YCEy2GvWrLoojmZohrvCK0TG2ozdHMebHaZ6/ZIRiLQ=' 'sha256-v5CTjXJARtV8VaFCdUh3dY9bknaW0zK+mX/3zniLiJU=' 'sha256-5KCKd3uVQRKzXXKOdxwhebtqwTeNbzlfnu/kdQYplYY=' 'sha256-yf8WN46pV9QY3b20l2vr+OwgqJnWwnlMAIyt7KDE7X4=' 'sha256-2IZOcsKyvLznOkrgolMCZYsf2mtIZnth2wBpkF6kpmo='`,
 
     // Styles: self + nonce
     `style-src 'self' 'nonce-${nonce}'`,
