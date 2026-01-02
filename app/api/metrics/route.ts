@@ -32,13 +32,22 @@ interface ClusterMetrics {
 
 /**
  * Attempt to fetch real K8s metrics from the cluster
- * Falls back to mock data if kubectl is not available
+ * Falls back to mock data if kubectl is not available or times out
  */
 async function getClusterMetrics(): Promise<ClusterMetrics> {
   try {
+    // Quick check: see if we're in a Kubernetes cluster by checking for service account token
+    const saTokenPath = '/var/run/secrets/kubernetes.io/serviceaccount/token'
+    try {
+      await fs.access(saTokenPath)
+    } catch {
+      console.log('Not running in Kubernetes cluster, using mock data')
+      return getMockMetrics()
+    }
+
     // Try to execute the K8s metrics script
     const scriptPath = path.join(process.cwd(), 'scripts', 'fetch-k8s-metrics.sh')
-    const outputPath = '/tmp/k8s-metrics.json'
+    const outputPath = `/tmp/k8s-metrics-${Date.now()}.json`
 
     // Check if script exists
     try {
@@ -48,16 +57,30 @@ async function getClusterMetrics(): Promise<ClusterMetrics> {
       return getMockMetrics()
     }
 
-    // Execute the script with timeout
-    await execAsync(`${scriptPath} portfolio ${outputPath}`, {
-      timeout: 10000, // 10 second timeout
-    })
+    // Execute the script with aggressive timeout (5 seconds) to fail fast
+    // and not block the API endpoint for too long
+    try {
+      await execAsync(`timeout 5 ${scriptPath} portfolio ${outputPath}`, {
+        timeout: 6000, // 6 second timeout (includes command execution overhead)
+      })
+    } catch (error) {
+      console.log('K8s metrics script timed out or failed, using mock data')
+      return getMockMetrics()
+    }
 
     // Read the JSON output
-    const metricsData = await fs.readFile(outputPath, 'utf-8')
-    const k8sMetrics = JSON.parse(metricsData)
+    try {
+      const metricsData = await fs.readFile(outputPath, 'utf-8')
+      const k8sMetrics = JSON.parse(metricsData)
 
-    return k8sMetrics
+      // Clean up temp file
+      fs.unlink(outputPath).catch(() => {})
+
+      return k8sMetrics
+    } catch (error) {
+      console.log('Failed to parse K8s metrics, using mock data')
+      return getMockMetrics()
+    }
   } catch (error) {
     console.error('Failed to fetch K8s metrics:', error)
     // Fall back to mock data

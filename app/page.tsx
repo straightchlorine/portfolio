@@ -1,9 +1,12 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Github, Linkedin, Mail, ExternalLink, Activity } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Badge } from "@/components/Badge";
+import { quantumPipelineBadges } from "@/lib/badges";
 
 const LiveMetrics = dynamic(() => import("@/components/LiveMetrics").then(mod => ({ default: mod.LiveMetrics })), {
   ssr: false,
@@ -138,60 +141,12 @@ export default function Home() {
                       Quantum Computing Pipeline
                     </h3>
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-xs sm:text-sm text-gray-400">
-                      {/* PyPI Package Badge */}
-                      <img
-                        src="https://badge.fury.io/py/quantum-pipeline.svg"
-                        alt="PyPI version"
-                        width="90"
-                        height="20"
-                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span aria-hidden="true">•</span>
-                      {/* PyPI Downloads Badge */}
-                      <img
-                        src="https://static.pepy.tech/badge/quantum-pipeline"
-                        alt="Total Downloads"
-                        width="150"
-                        height="20"
-                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span aria-hidden="true">•</span>
-                      {/* Docker Pulls Badge */}
-                      <img
-                        src="https://img.shields.io/docker/pulls/straightchlorine/quantum-pipeline.svg"
-                        alt="Docker Pulls"
-                        width="110"
-                        height="20"
-                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span aria-hidden="true">•</span>
-                      {/* Build Status Badge */}
-                      <img
-                        src="https://img.shields.io/github/actions/workflow/status/straightchlorine/quantum-pipeline/pypi-publish.yml.svg"
-                        alt="Build Status"
-                        width="110"
-                        height="20"
-                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span aria-hidden="true">•</span>
-                      {/* GitHub Stars Badge */}
-                      <img
-                        src="https://img.shields.io/github/stars/straightchlorine/quantum-pipeline.svg"
-                        alt="GitHub Stars"
-                        width="100"
-                        height="20"
-                        className="h-4 sm:h-5 transition-all duration-300 hover:scale-110 hover:brightness-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      {quantumPipelineBadges.map((badge, index) => (
+                        <React.Fragment key={badge.alt}>
+                          {index > 0 && <span aria-hidden="true">•</span>}
+                          <Badge {...badge} />
+                        </React.Fragment>
+                      ))}
                     </div>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-600 group-hover:text-purple-400 transition-colors" aria-hidden="true" />

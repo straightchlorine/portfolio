@@ -9,8 +9,9 @@ export function proxy(request: NextRequest) {
     // Restrict everything to self unless explicitly allowed
     "default-src 'self'",
 
-    // Scripts: self + trusted analytics (Rybbit) + Cloudflare email protection + nonce + strict-dynamic
-    `script-src 'self' https://app.rybbit.io/api/script.js https://challenges.cloudflare.com 'nonce-${nonce}' 'strict-dynamic'`,
+    // Scripts: self + trusted analytics (Rybbit) + Cloudflare email protection + nonce
+    // Note: strict-dynamic removed to allow Cloudflare's email-decode injection from same origin
+    `script-src 'self' https://app.rybbit.io/api/script.js https://challenges.cloudflare.com 'nonce-${nonce}'`,
 
     // Styles: self + nonce
     `style-src 'self' 'nonce-${nonce}'`,
