@@ -23,7 +23,7 @@ steps:
   - name: release-build-dockerhub
     image: woodpeckerci/plugin-docker-buildx:latest
     depends_on:
-      - release-test
+      - validate-version
     settings:
       repo:
         from_secret: docker_repo
@@ -43,7 +43,7 @@ steps:
   - name: release-create-release
     image: alpine/git:latest
     depends_on:
-      - release-smoke-tests
+      - release-build-dockerhub
     environment:
       CODEBERG_TOKEN:
         from_secret: codeberg_token
